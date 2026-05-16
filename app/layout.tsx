@@ -6,7 +6,7 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "EMR - ST. Vincentius A Paulo",
+  title: "ERM - ST. Vincentius A Paulo",
   description: "Sistem Rekam Medis Elektronik",
 };
 

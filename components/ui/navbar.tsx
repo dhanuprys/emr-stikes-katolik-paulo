@@ -17,7 +17,7 @@ export function Navbar({ userName }: { userName: string }) {
         <div className="flex items-center gap-4">
           <Link href="/" className="flex items-center gap-2 font-semibold text-primary shrink-0">
             <Stethoscope className="h-5 w-5 sm:h-6 sm:w-6" />
-            <span className="text-sm sm:text-base tracking-tight">EMR STIKES Paulo</span>
+            <span className="text-sm sm:text-base tracking-tight">ERM STIKES Paulo</span>
           </Link>
           <div className="hidden md:flex gap-6 ml-6 text-sm">
             <Link 

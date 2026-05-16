@@ -17,7 +17,7 @@ export default function LoginPage() {
         <div className="w-12 h-12 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-2">
           <Stethoscope size={24} />
         </div>
-        <CardTitle className="text-2xl">Sistem EMR</CardTitle>
+        <CardTitle className="text-2xl">Sistem ERM</CardTitle>
         <CardDescription>
           ST. Vincentius A Paulo Surabaya
         </CardDescription>
