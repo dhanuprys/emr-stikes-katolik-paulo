@@ -92,7 +92,6 @@ export function DatePicker({ value, onChange, withTime = false }: DatePickerProp
           mode="single"
           selected={date}
           onSelect={handleSelect}
-          initialFocus
         />
         {withTime && (
           <div className="p-3 border-t flex items-center gap-2">

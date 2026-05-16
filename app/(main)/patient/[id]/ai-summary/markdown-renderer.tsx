@@ -40,7 +40,7 @@ export default function Markdown({ content }: { content: string }) {
       flushList();
       const level = headingMatch[1].length;
       const text = headingMatch[2];
-      const Tag = `h${level + 1}` as keyof JSX.IntrinsicElements;
+      const Tag = `h${level + 1}` as keyof React.JSX.IntrinsicElements;
       const sizes: Record<number, string> = {
         1: "text-xl font-bold mt-6 mb-3 text-foreground",
         2: "text-lg font-semibold mt-5 mb-2 text-foreground",

@@ -1,5 +1,5 @@
 export type FieldDef = {
-  key: string; label: string; type: 'text'|'textarea'|'datetime'|'radio'|'number';
+  key: string; label: string; type: 'text'|'textarea'|'datetime'|'date'|'radio'|'number';
   options?: string[]; suffix?: string; optional?: boolean; allowCustom?: boolean;
 };
 export type SectionDef = { title: string; description?: string; fields: FieldDef[] };

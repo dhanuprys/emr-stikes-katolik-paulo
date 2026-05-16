@@ -22,7 +22,7 @@ export default function AssessmentPage({
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const hasLoadedRef = useRef(false);
 
-  const { register, watch, control, reset } = useForm({
+  const { register, watch, control, reset } = useForm<any>({
     defaultValues: {
       ...buildDefaults(),
       // Dynamic arrays for Diagnosa Keperawatan
