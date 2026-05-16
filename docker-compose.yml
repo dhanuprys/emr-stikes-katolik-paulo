@@ -11,13 +11,13 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - DATABASE_URL=mongodb://default:default@mongo:27017/emr-stikes-katolik-paulo?authSource=admin
+      # Important: added ?replicaSet=rs0 to tell Prisma it's a replica set!
+      - DATABASE_URL=mongodb://default:default@mongo:27017/emr-stikes-katolik-paulo?authSource=admin&replicaSet=rs0
     env_file:
       - .env
     depends_on:
       - mongo
     volumes:
-      # Preserve the uploads folder so it doesn't get wiped out when the container is rebuilt
       - uploads_data:/app/public/uploads
 
   mongo:
@@ -30,6 +30,26 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=default
       - MONGO_INITDB_ROOT_PASSWORD=default
       - MONGO_INITDB_DATABASE=emr-stikes-katolik-paulo
+    entrypoint:
+      - bash
+      - -c
+      - |
+        echo "supersecretreplicakey12345" > /data/replica.key
+        chmod 400 /data/replica.key
+        chown 999:999 /data/replica.key
+        
+        # Run replica set initiation in the background
+        (
+          echo "Waiting for MongoDB to boot..."
+          sleep 5
+          until mongosh --port 27017 -u default -p default --authenticationDatabase admin --eval "print('connected')" > /dev/null 2>&1; do
+            sleep 2
+          done
+          echo "Initiating Replica Set..."
+          mongosh --port 27017 -u default -p default --authenticationDatabase admin --eval 'rs.initiate({_id: "rs0", members: [{_id: 0, host: "mongo:27017"}]})' || true
+        ) &
+        
+        exec docker-entrypoint.sh mongod --replSet rs0 --keyFile /data/replica.key
     volumes:
       - mongo_data:/data/db
 
