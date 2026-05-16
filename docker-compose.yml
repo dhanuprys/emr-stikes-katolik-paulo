@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  app:
+    image: node:20-alpine
+    container_name: emr-app
+    # Bind the current directory to /app inside the container
+    volumes:
+      - ./:/app
+      # Anonymous volumes for node_modules and .next so they don't get overwritten by the host
+      - /app/node_modules
+      - /app/.next
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      # Use the 'mongo' service name to connect to the database container
+      - DATABASE_URL=mongodb://default:default@mongo:27017/emr-stikes-katolik-paulo?authSource=admin
+    depends_on:
+      - mongo
+    # Run npm install, build the project, and then start the Next.js server
+    command: >
+      sh -c "npm install &&
+             npx prisma generate &&
+             npm run build &&
+             npm start"
+
+  mongo:
+    image: mongo:latest
+    container_name: emr-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=default
+      - MONGO_INITDB_ROOT_PASSWORD=default
+      - MONGO_INITDB_DATABASE=emr-stikes-katolik-paulo
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
