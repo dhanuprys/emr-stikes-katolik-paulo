@@ -21,6 +21,9 @@ COPY . .
 # Disable telemetry during the build
 ENV NEXT_TELEMETRY_DISABLED=1
 
+# Provide a dummy session secret for Next.js build-time static evaluation
+ENV SESSION_SECRET="dummy_secret_for_build_only_1234567890="
+
 RUN npm run build
 
 # Production image, copy all the files and run next
