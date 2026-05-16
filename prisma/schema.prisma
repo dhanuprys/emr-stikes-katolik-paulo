@@ -1,0 +1,142 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  username  String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+}
+
+model Patient {
+  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+  noRegMrs           String
+  noRm               String    @unique
+  paviliun           String
+  kelas              String
+  nama               String
+  alamat             String
+  kota               String
+  provinsi           String
+  noTelp             String
+  asalPasien         String
+  biaya              String
+  tanggalMasuk       DateTime
+  tanggalKeluar      DateTime?
+  tanggalMeninggal   DateTime?
+  tanggalLahir       DateTime
+  gender             String // "L" or "P"
+  umur               String
+  bangsa             String
+  agama              String
+  pendidikan         String
+  pekerjaan          String
+  statusPernikahan   String?
+  namaSuamiIstri     String?
+  namaAyah           String
+  namaIbu            String
+  noRmIbu            String
+  pekerjaanIbu       String
+  asalMrs            String // "Poli", "IGD", "Praktek", "Admission"
+  dokter1            String
+  dokter2            String?
+  dokter3            String?
+  dokter4            String?
+  diagnosaMasuk      String
+  jenisKasus         String // "bedah" or "penyakit dalam"
+  
+  // Emergency Contact embedded
+  daruratNama        String
+  daruratAlamat      String
+  daruratTelepon     String
+  daruratHubungan    String
+
+  diagnosaKeluar     String?
+  diagnosaUtama      String?
+  diagnosaTambahan   String?
+  diagnosaKomplikasi String?
+  penyebabTrauma     String?
+  operasiTindakan1   String?
+  operasiTindakan2   String?
+  hasilPerawatan     String?
+  caraKeluar         String?
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  assessments        InitialAssessment[]
+  cppts              Cppt[]
+  labResults         LabResult[]
+  aiSummaries        AiSummary[]
+}
+
+model InitialAssessment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  patientId String   @db.ObjectId
+  patient   Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  data      Json     // Stores the massive dynamic assessment form
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([patientId]) // 1 assessment per patient initially, or allow multiple if needed? Re-reading spec: "create patient initial assessment... the data in this page is editable (overwritable)." So 1 per patient.
+}
+
+model Cppt {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  patientId String   @db.ObjectId
+  patient   Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  tanggal   DateTime
+  waktu     String   // "Pagi", "Siang", "Malam"
+  subjektif String
+  objektif  String
+  assessment String
+  planning  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model LabResult {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  patientId String   @db.ObjectId
+  patient   Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  tanggal   DateTime
+  files     String[] // Array of file paths
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ApiKey {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String   // e.g. "Gemini Key 1"
+  provider  String   // e.g. "gemini"
+  key       String
+  isActive  Boolean  @default(true)
+  usageCount Int     @default(0)
+  createdAt DateTime @default(now())
+}
+
+model AiSummary {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  patientId String   @db.ObjectId
+  patient   Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  content   String   // Markdown summary
+  model     String   // e.g. "gemini-2.0-flash"
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  action    String   // "CREATE", "UPDATE", "DELETE"
+  entity    String   // "Patient", "InitialAssessment", "Cppt", "LabResult"
+  entityId  String
+  changes   Json
+  timestamp DateTime @default(now())
+}
