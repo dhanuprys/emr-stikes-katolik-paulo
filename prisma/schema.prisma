@@ -40,10 +40,10 @@ model Patient {
   pekerjaan          String
   statusPernikahan   String?
   namaSuamiIstri     String?
-  namaAyah           String
-  namaIbu            String
-  noRmIbu            String
-  pekerjaanIbu       String
+  namaAyah           String?
+  namaIbu            String?
+  noRmIbu            String?
+  pekerjaanIbu       String?
   asalMrs            String // "Poli", "IGD", "Praktek", "Admission"
   dokter1            String
   dokter2            String?

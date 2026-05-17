@@ -122,6 +122,9 @@ export function DatePicker({ value, defaultValue, onChange, withTime = false, na
             mode="single"
             selected={date}
             onSelect={handleSelect}
+            captionLayout="dropdown"
+            startMonth={new Date(1900, 0)}
+            endMonth={new Date(2100, 11)}
           />
           {withTime && (
             <div className="p-3 border-t flex items-center gap-2">

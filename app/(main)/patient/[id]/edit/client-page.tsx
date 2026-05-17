@@ -159,10 +159,10 @@ export function EditPatientClientPage({ patient }: { patient: any }) {
             </CardHeader>
             <CardContent className="pt-0 pb-6 px-6 space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2"><Label htmlFor="namaAyah">Nama Ayah <span className="text-destructive text-slate-600 font-semibold">*</span></Label><Input id="namaAyah" name="namaAyah" required defaultValue={patient.namaAyah}  className="bg-white" /></div>
-                <div className="space-y-2"><Label htmlFor="namaIbu">Nama Ibu <span className="text-destructive text-slate-600 font-semibold">*</span></Label><Input id="namaIbu" name="namaIbu" required defaultValue={patient.namaIbu}  className="bg-white" /></div>
-                <div className="space-y-2"><Label htmlFor="noRmIbu">No RM Ibu <span className="text-destructive text-slate-600 font-semibold">*</span></Label><Input id="noRmIbu" name="noRmIbu" required defaultValue={patient.noRmIbu}  className="bg-white" /></div>
-                <div className="space-y-2"><Label htmlFor="pekerjaanIbu">Pekerjaan Ibu <span className="text-destructive text-slate-600 font-semibold">*</span></Label><Input id="pekerjaanIbu" name="pekerjaanIbu" required defaultValue={patient.pekerjaanIbu}  className="bg-white" /></div>
+                <div className="space-y-2"><Label htmlFor="namaAyah">Nama Ayah</Label><Input id="namaAyah" name="namaAyah" defaultValue={patient.namaAyah}  className="bg-white" /></div>
+                <div className="space-y-2"><Label htmlFor="namaIbu">Nama Ibu</Label><Input id="namaIbu" name="namaIbu" defaultValue={patient.namaIbu}  className="bg-white" /></div>
+                <div className="space-y-2"><Label htmlFor="noRmIbu">No RM Ibu</Label><Input id="noRmIbu" name="noRmIbu" defaultValue={patient.noRmIbu}  className="bg-white" /></div>
+                <div className="space-y-2"><Label htmlFor="pekerjaanIbu">Pekerjaan Ibu</Label><Input id="pekerjaanIbu" name="pekerjaanIbu" defaultValue={patient.pekerjaanIbu}  className="bg-white" /></div>
               </div>
               <div className="border-t pt-4 mt-4">
                 <h4 className="font-medium mb-4">Kontak Darurat</h4>
