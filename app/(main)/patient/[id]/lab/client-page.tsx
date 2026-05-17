@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Plus, FlaskConical, FileText, Download, ExternalLink, Search } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { DeleteLabButton } from "@/components/patient/delete-lab-button";
+import { DatePicker } from "@/components/ui/date-picker";
 
 function isImage(filename: string) {
   return /\.(jpg|jpeg|png|gif|webp)$/i.test(filename);
@@ -39,11 +40,10 @@ export function LabClientPage({ patientId, initialLabs }: { patientId: string, i
         <div className="flex items-center gap-3 w-full sm:w-auto">
           <div className="relative flex-1 sm:w-48">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input 
-              type="date" 
-              className="pl-9" 
+            <DatePicker 
+              className="pl-9 bg-white w-full" 
               value={filterDate}
-              onChange={(e) => setFilterDate(e.target.value)}
+              onChange={(val) => setFilterDate(val)}
             />
           </div>
           <Button asChild>

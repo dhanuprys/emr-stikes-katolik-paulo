@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Plus, Clock, Edit, ChevronDown, ChevronRight, Search } from "lucide-react";
 import { formatDateTime } from "@/lib/utils";
 import { DeleteCpptButton } from "@/components/patient/delete-cppt-button";
+import { DatePicker } from "@/components/ui/date-picker";
 
 // Helper to format Date to YYYY-MM-DD
 function formatDateStr(date: Date | string) {
@@ -74,11 +75,10 @@ export function CpptClientPage({
         <div className="flex items-center gap-3 w-full sm:w-auto">
           <div className="relative flex-1 sm:w-48">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input 
-              type="date" 
-              className="pl-9" 
+            <DatePicker 
+              className="pl-9 bg-white w-full" 
               value={filterDate}
-              onChange={(e) => setFilterDate(e.target.value)}
+              onChange={(val) => setFilterDate(val)}
             />
           </div>
           <Button asChild>

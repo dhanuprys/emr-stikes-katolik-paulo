@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { FileUp, Info, FileText, Image as ImageIcon, X } from "lucide-react";
+import { DatePicker } from "@/components/ui/date-picker";
 
 export default function NewLabResultPage({
   params,
@@ -104,7 +105,7 @@ export default function NewLabResultPage({
           <CardContent className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="tanggal">Tanggal Keluar Hasil <span className="text-destructive">*</span></Label>
-              <Input id="tanggal" name="tanggal" type="date" required />
+              <DatePicker id="tanggal" name="tanggal"  required />
             </div>
 
             <div className="space-y-2">

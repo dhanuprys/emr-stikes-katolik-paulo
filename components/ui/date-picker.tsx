@@ -16,16 +16,22 @@ import { Input } from "@/components/ui/input"
 
 interface DatePickerProps {
   value?: string | Date
+  defaultValue?: string | Date
   onChange?: (val: string) => void
   withTime?: boolean
+  name?: string
+  id?: string
+  required?: boolean
+  className?: string
 }
 
-export function DatePicker({ value, onChange, withTime = false }: DatePickerProps) {
+export function DatePicker({ value, defaultValue, onChange, withTime = false, name, id, required, className }: DatePickerProps) {
+  const initialDate = value || defaultValue;
   const [date, setDate] = React.useState<Date | undefined>(
-    value ? new Date(value) : undefined
+    initialDate ? new Date(initialDate) : undefined
   )
   const [time, setTime] = React.useState<string>(
-    value && withTime ? format(new Date(value), "HH:mm") : "00:00"
+    initialDate && withTime ? format(new Date(initialDate), "HH:mm") : "00:00"
   )
 
   // Sync incoming value
@@ -69,42 +75,67 @@ export function DatePicker({ value, onChange, withTime = false }: DatePickerProp
     }
   }
 
+  const combinedDate = date ? new Date(date) : undefined;
+  if (combinedDate && withTime) {
+    const [hours, minutes] = time.split(':');
+    combinedDate.setHours(parseInt(hours || '0', 10));
+    combinedDate.setMinutes(parseInt(minutes || '0', 10));
+  }
+
+  const hiddenValue = combinedDate 
+    ? (withTime ? format(combinedDate, "yyyy-MM-dd'T'HH:mm") : format(combinedDate, "yyyy-MM-dd"))
+    : "";
+
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant={"outline"}
-          className={cn(
-            "w-full justify-start text-left font-normal bg-white",
-            !date && "text-muted-foreground"
-          )}
-        >
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? (
-            withTime ? format(date, "PPP p") : format(date, "PPP")
-          ) : (
-            <span>Pilih tanggal</span>
-          )}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0 bg-white" align="start">
-        <Calendar
-          mode="single"
-          selected={date}
-          onSelect={handleSelect}
+    <div className="relative">
+      {name && (
+        <input 
+          type="text" 
+          name={name} 
+          id={id} 
+          value={hiddenValue} 
+          required={required}
+          onChange={() => {}}
+          className="absolute opacity-0 w-full h-full -z-10 pointer-events-none" 
         />
-        {withTime && (
-          <div className="p-3 border-t flex items-center gap-2">
-            <Clock className="h-4 w-4 text-muted-foreground" />
-            <Input 
-              type="time" 
-              value={time} 
-              onChange={handleTimeChange} 
-              className="flex-1"
-            />
-          </div>
-        )}
-      </PopoverContent>
-    </Popover>
+      )}
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant={"outline"}
+            className={cn(
+              "w-full justify-start text-left font-normal bg-white",
+              !date && "text-muted-foreground",
+              className
+            )}
+          >
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {combinedDate ? (
+              withTime ? format(combinedDate, "PPP p") : format(combinedDate, "PPP")
+            ) : (
+              <span>Pilih tanggal</span>
+            )}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0 bg-white" align="start">
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={handleSelect}
+          />
+          {withTime && (
+            <div className="p-3 border-t flex items-center gap-2">
+              <Clock className="h-4 w-4 text-muted-foreground" />
+              <Input 
+                type="time" 
+                value={time} 
+                onChange={handleTimeChange} 
+                className="flex-1"
+              />
+            </div>
+          )}
+        </PopoverContent>
+      </Popover>
+    </div>
   )
 }

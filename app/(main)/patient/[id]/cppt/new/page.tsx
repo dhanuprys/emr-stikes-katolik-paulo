@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Loader2, Info } from "lucide-react";
+import { DatePicker } from "@/components/ui/date-picker";
 
 export default function NewCpptPage({
   params,
@@ -107,32 +108,32 @@ export default function NewCpptPage({
 
       <form action={action}>
         <Card>
-          <CardHeader>
-            <CardTitle className="flex justify-between items-center">
+          <CardHeader className="pb-4">
+            <CardTitle className="flex justify-between items-center text-slate-800">
               Informasi Waktu
               {isLoading && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />}
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="pt-0 pb-6 px-6 space-y-4">
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="tanggal">Tanggal & Waktu <span className="text-destructive">*</span></Label>
-                <Input 
+                <Label htmlFor="tanggal">Tanggal & Waktu <span className="text-destructive text-slate-600 font-semibold">*</span></Label>
+                <DatePicker 
                   id="tanggal" 
                   name="tanggal" 
-                  type="datetime-local" 
+                  withTime 
                   required 
                   value={tanggal}
-                  onChange={(e) => setTanggal(e.target.value)}
+                  onChange={(val) => setTanggal(val)}
                 />
                 {state?.errors?.tanggal && <p className="text-sm text-destructive">{state.errors.tanggal[0]}</p>}
               </div>
               <div className="space-y-2">
-                <Label>Shift Waktu <span className="text-destructive">*</span></Label>
-                <div className="flex gap-4 items-center h-10 border rounded-md px-3 bg-background">
-                  <label className="flex items-center gap-2"><input type="radio" name="waktu" value="Pagi" required checked={waktu === "Pagi"} onChange={(e) => setWaktu(e.target.value)} /> Pagi</label>
-                  <label className="flex items-center gap-2"><input type="radio" name="waktu" value="Siang" checked={waktu === "Siang"} onChange={(e) => setWaktu(e.target.value)} /> Siang</label>
-                  <label className="flex items-center gap-2"><input type="radio" name="waktu" value="Malam" checked={waktu === "Malam"} onChange={(e) => setWaktu(e.target.value)} /> Malam</label>
+                <Label>Shift Waktu <span className="text-destructive text-slate-600 font-semibold">*</span></Label>
+                <div className="flex flex-wrap gap-2 border rounded-md p-2 bg-white/60">
+                  <label className="clinical-control-label"><input type="radio" name="waktu" value="Pagi" required checked={waktu === "Pagi"} onChange={(e) => setWaktu(e.target.value)} className="clinical-radio" /> Pagi</label>
+                  <label className="clinical-control-label"><input type="radio" name="waktu" value="Siang" checked={waktu === "Siang"} onChange={(e) => setWaktu(e.target.value)} className="clinical-radio" /> Siang</label>
+                  <label className="clinical-control-label"><input type="radio" name="waktu" value="Malam" checked={waktu === "Malam"} onChange={(e) => setWaktu(e.target.value)} className="clinical-radio" /> Malam</label>
                 </div>
                 {state?.errors?.waktu && <p className="text-sm text-destructive">{state.errors.waktu[0]}</p>}
               </div>
@@ -153,32 +154,32 @@ export default function NewCpptPage({
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           )}
-          <CardHeader>
-            <CardTitle>SOAP</CardTitle>
+          <CardHeader className="pb-4">
+            <CardTitle className="text-xl text-slate-800">SOAP</CardTitle>
             <CardDescription>Subjektif, Objektif, Assessment, Planning</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="pt-0 pb-6 px-6 space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="subjektif" className="text-base">S - Subjektif <span className="text-destructive">*</span></Label>
-              <Textarea id="subjektif" name="subjektif" required className="h-24" value={subjektif} onChange={(e) => setSubjektif(e.target.value)} />
+              <Label htmlFor="subjektif" className="text-base text-slate-600 font-semibold">S - Subjektif <span className="text-destructive">*</span></Label>
+              <Textarea id="subjektif" name="subjektif" required className="h-24 bg-white" value={subjektif} onChange={(e) => setSubjektif(e.target.value)} />
               {state?.errors?.subjektif && <p className="text-sm text-destructive">{state.errors.subjektif[0]}</p>}
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="objektif" className="text-base">O - Objektif <span className="text-destructive">*</span></Label>
-              <Textarea id="objektif" name="objektif" required className="h-24" value={objektif} onChange={(e) => setObjektif(e.target.value)} />
+              <Label htmlFor="objektif" className="text-base text-slate-600 font-semibold">O - Objektif <span className="text-destructive">*</span></Label>
+              <Textarea id="objektif" name="objektif" required className="h-24 bg-white" value={objektif} onChange={(e) => setObjektif(e.target.value)} />
               {state?.errors?.objektif && <p className="text-sm text-destructive">{state.errors.objektif[0]}</p>}
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="assessment" className="text-base">A - Assessment <span className="text-destructive">*</span></Label>
-              <Textarea id="assessment" name="assessment" required className="h-20" value={assessment} onChange={(e) => setAssessment(e.target.value)} />
+              <Label htmlFor="assessment" className="text-base text-slate-600 font-semibold">A - Assessment <span className="text-destructive">*</span></Label>
+              <Textarea id="assessment" name="assessment" required className="h-20 bg-white" value={assessment} onChange={(e) => setAssessment(e.target.value)} />
               {state?.errors?.assessment && <p className="text-sm text-destructive">{state.errors.assessment[0]}</p>}
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="planning" className="text-base">P - Planning <span className="text-destructive">*</span></Label>
-              <Textarea id="planning" name="planning" required className="h-24" value={planning} onChange={(e) => setPlanning(e.target.value)} />
+              <Label htmlFor="planning" className="text-base text-slate-600 font-semibold">P - Planning <span className="text-destructive">*</span></Label>
+              <Textarea id="planning" name="planning" required className="h-24 bg-white" value={planning} onChange={(e) => setPlanning(e.target.value)} />
               {state?.errors?.planning && <p className="text-sm text-destructive">{state.errors.planning[0]}</p>}
             </div>
           </CardContent>

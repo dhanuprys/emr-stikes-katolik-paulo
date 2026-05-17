@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { DatePicker } from "@/components/ui/date-picker";
 
 export default function NewPatientPage() {
   const [state, action, pending] = useActionState(createPatientAction, undefined);
@@ -59,16 +60,16 @@ export default function NewPatientPage() {
               
               <div className="space-y-2">
                 <Label htmlFor="tanggalMasuk">Tanggal Masuk <span className="text-destructive">*</span></Label>
-                <Input id="tanggalMasuk" name="tanggalMasuk" type="datetime-local" required />
+                <DatePicker id="tanggalMasuk" name="tanggalMasuk" withTime  required />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="tanggalKeluar">Tanggal Keluar (Opsional)</Label>
-                  <Input id="tanggalKeluar" name="tanggalKeluar" type="datetime-local" />
+                  <DatePicker id="tanggalKeluar" name="tanggalKeluar" withTime  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="tanggalMeninggal">Tanggal Meninggal (Opsional)</Label>
-                  <Input id="tanggalMeninggal" name="tanggalMeninggal" type="datetime-local" />
+                  <DatePicker id="tanggalMeninggal" name="tanggalMeninggal" withTime  />
                 </div>
               </div>
               
@@ -124,7 +125,7 @@ export default function NewPatientPage() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="tanggalLahir">Tanggal Lahir <span className="text-destructive">*</span></Label>
-                  <Input id="tanggalLahir" name="tanggalLahir" type="date" required />
+                  <DatePicker id="tanggalLahir" name="tanggalLahir"  required />
                 </div>
                 <div className="space-y-2">
                   <Label>Gender <span className="text-destructive">*</span></Label>
