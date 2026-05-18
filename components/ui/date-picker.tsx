@@ -55,8 +55,8 @@ export function DatePicker({ value, defaultValue, onChange, withTime = false, na
         const newDate = new Date(selectedDate);
         newDate.setHours(parseInt(hours || '0', 10));
         newDate.setMinutes(parseInt(minutes || '0', 10));
-        // Return local ISO string without Z to match standard datetime-local format
-        onChange(format(newDate, "yyyy-MM-dd'T'HH:mm"));
+        // Include timezone offset so the server parses it correctly regardless of its own timezone
+        onChange(format(newDate, "yyyy-MM-dd'T'HH:mm:ssXXX"));
       } else {
         onChange(format(selectedDate, "yyyy-MM-dd"));
       }
@@ -71,7 +71,7 @@ export function DatePicker({ value, defaultValue, onChange, withTime = false, na
       const newDate = new Date(date);
       newDate.setHours(parseInt(hours || '0', 10));
       newDate.setMinutes(parseInt(minutes || '0', 10));
-      onChange(format(newDate, "yyyy-MM-dd'T'HH:mm"));
+      onChange(format(newDate, "yyyy-MM-dd'T'HH:mm:ssXXX"));
     }
   }
 
@@ -83,7 +83,7 @@ export function DatePicker({ value, defaultValue, onChange, withTime = false, na
   }
 
   const hiddenValue = combinedDate 
-    ? (withTime ? format(combinedDate, "yyyy-MM-dd'T'HH:mm") : format(combinedDate, "yyyy-MM-dd"))
+    ? (withTime ? format(combinedDate, "yyyy-MM-dd'T'HH:mm:ssXXX") : format(combinedDate, "yyyy-MM-dd"))
     : "";
 
   return (
