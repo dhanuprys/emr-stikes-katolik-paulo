@@ -73,6 +73,48 @@ export function FieldRenderer({ field, register, control }: { field: FieldDef; r
     );
   }
 
+  if (field.type === "checkbox" && field.options) {
+    return (
+      <div className="space-y-3 md:col-span-2">
+        <Label className="text-slate-600 font-semibold">{field.label} {required && <span className="text-destructive">*</span>}</Label>
+        <Controller
+          control={control}
+          name={field.key}
+          render={({ field: { value, onChange } }) => {
+            // Backward compat: old data may be a plain string instead of array
+            const selected: string[] = Array.isArray(value) ? value : (value ? [value] : []);
+            const toggle = (opt: string) => {
+              if (selected.includes(opt)) {
+                onChange(selected.filter((v: string) => v !== opt));
+              } else {
+                onChange([...selected, opt]);
+              }
+            };
+            return (
+              <div className="flex flex-wrap gap-2 border rounded-md p-2 bg-white/60">
+                {field.options!.map((opt) => (
+                  <label key={opt} className="clinical-control-label">
+                    <input
+                      type="checkbox"
+                      value={opt}
+                      checked={selected.includes(opt)}
+                      className="clinical-checkbox"
+                      onChange={() => toggle(opt)}
+                    />
+                    {opt}
+                  </label>
+                ))}
+              </div>
+            );
+          }}
+        />
+        {field.allowCustom && (
+          <Input placeholder="Keterangan lain..." {...register(`${field.key}_custom`)} className="mt-2 bg-white" />
+        )}
+      </div>
+    );
+  }
+
   // text / number
   return (
     <div className="space-y-2">

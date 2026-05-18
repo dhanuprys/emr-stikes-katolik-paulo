@@ -72,6 +72,7 @@ model Patient {
   updatedAt          DateTime @updatedAt
 
   assessments        InitialAssessment[]
+  resumes            Resume[]
   cppts              Cppt[]
   labResults         LabResult[]
   aiSummaries        AiSummary[]
@@ -86,6 +87,17 @@ model InitialAssessment {
   updatedAt DateTime @updatedAt
 
   @@unique([patientId]) // 1 assessment per patient initially, or allow multiple if needed? Re-reading spec: "create patient initial assessment... the data in this page is editable (overwritable)." So 1 per patient.
+}
+
+model Resume {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  patientId String   @db.ObjectId
+  patient   Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  data      Json     // Stores the resume form data
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([patientId]) // 1 resume per patient
 }
 
 model Cppt {

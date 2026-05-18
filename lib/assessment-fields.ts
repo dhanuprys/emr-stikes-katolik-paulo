@@ -1,35 +1,10 @@
 export type FieldDef = {
-  key: string; label: string; type: 'text'|'textarea'|'datetime'|'date'|'radio'|'number';
+  key: string; label: string; type: 'text'|'textarea'|'datetime'|'date'|'radio'|'checkbox'|'number';
   options?: string[]; suffix?: string; optional?: boolean; allowCustom?: boolean;
 };
 export type SectionDef = { title: string; description?: string; fields: FieldDef[] };
 
 export const assessmentSections: SectionDef[] = [
-  // ===== RESUME =====
-  { title: "Resume (Ringkasan Perawatan Pasien Pulang)", fields: [
-    { key:"resumeTanggal", label:"Tanggal dan waktu", type:"datetime" },
-    { key:"resumeAnamesa", label:"Anamnesa", type:"textarea" },
-    { key:"resumeRpd", label:"Riwayat Penyakit Dahulu", type:"textarea" },
-    { key:"resumeRps", label:"Riwayat Penyakit Sekarang", type:"textarea" },
-    { key:"resumeFisik", label:"Pemeriksaan Fisik", type:"textarea" },
-    { key:"resumeLab", label:"Laboratorium", type:"textarea" },
-    { key:"resumeRadiologi", label:"Radiologi", type:"textarea" },
-    { key:"resumeLainLain", label:"Lain-lain", type:"textarea", optional:true },
-    { key:"resumeDiagnosaMasuk", label:"Diagnosa Masuk", type:"textarea" },
-    { key:"resumeDiagnosaAkhir", label:"Diagnosa Akhir", type:"textarea" },
-    { key:"resumeTglMasuk", label:"Tanggal Masuk", type:"datetime" },
-    { key:"resumeTglKeluar", label:"Tanggal Keluar/Meninggal", type:"datetime", optional:true },
-    { key:"resumeIndikasi", label:"Indikasi MRS", type:"textarea" },
-    { key:"resumeMasalah", label:"Masalah yang dihadapi", type:"textarea" },
-    { key:"resumeKonsultasi", label:"Konsultasi", type:"textarea" },
-    { key:"resumePengobatan", label:"Pengobatan", type:"textarea" },
-    { key:"resumeTindakan", label:"Pembedahan/Tindakan", type:"textarea" },
-    { key:"resumePerjalanan", label:"Perjalanan Penyakit", type:"textarea" },
-    { key:"resumeKeadaanKrs", label:"Keadaan/hasil pengobatan waktu KRS", type:"textarea" },
-    { key:"resumePrognosis", label:"Prognosis", type:"textarea" },
-    { key:"resumeInstruksi", label:"Instruksi/Tindak Lanjut", type:"textarea" },
-  ]},
-
   // ===== ASESMEN AWAL MEDIS =====
   { title: "Bagian I: Asesmen Awal Medis", description:"Subyektif: Anamnesa", fields: [
     { key:"medisKeluhanUtama", label:"Keluhan Utama", type:"textarea" },
@@ -69,22 +44,22 @@ export const assessmentSections: SectionDef[] = [
     { key:"masalahOperasi", label:"Masalah dalam operasi/pembiusan", type:"radio", options:["Tidak","Ya"], allowCustom:true },
     { key:"riwayatTransfusi", label:"Riwayat transfusi darah", type:"radio", options:["Tidak","Ya"], allowCustom:true },
     { key:"obatRumah", label:"Obat dari rumah", type:"radio", options:["Tidak","Ada"], allowCustom:true },
-    { key:"riwayatImunisasi", label:"Riwayat imunisasi", type:"radio", options:["BCG","Hepatitis","Polio","DPT","Campak","Lain-lain"], allowCustom:true },
-    { key:"riwayatPenyakitKeluarga", label:"Riwayat penyakit keluarga", type:"radio", options:["Hipertensi","Hepatitis","Asma","TBC paru","DM","Lainnya"], allowCustom:true },
+    { key:"riwayatImunisasi", label:"Riwayat imunisasi", type:"checkbox", options:["BCG","Hepatitis","Polio","DPT","Campak","Lain-lain"], allowCustom:true },
+    { key:"riwayatPenyakitKeluarga", label:"Riwayat penyakit keluarga", type:"textarea" },
   ]},
 
   // ===== RIWAYAT KEHAMILAN =====
   { title: "Riwayat Kehamilan dan Kelahiran", fields: [
-    { key:"usiaKehamilan", label:"Usia Kehamilan", type:"text" },
-    { key:"anakKe", label:"Anak ke", type:"text" },
-    { key:"riwayatPenyakitHamil", label:"Riwayat penyakit selama kehamilan", type:"radio", options:["Tidak ada","Hipertensi","Asma","Toxoplasma","DM","Jantung","Thypoid","TBC","Lain-lain"], allowCustom:true },
-    { key:"komplikasiPersalinan", label:"Komplikasi saat persalinan", type:"radio", options:["Tidak ada","Kejang","Pendarahan","Lain-lain"], allowCustom:true },
-    { key:"tempatLahir", label:"Tempat kelahiran", type:"radio", options:["Rumah sakit","Puskesmas","BPM","Lain-lain"], allowCustom:true },
-    { key:"jenisPersalinan", label:"Jenis persalinan", type:"radio", options:["Spontan","Sectio C","Vaccum eks","Forcep eks.","Alasan tindakan"], allowCustom:true },
-    { key:"ditolongOleh", label:"Ditolong oleh", type:"radio", options:["Dokter","Bidan"] },
-    { key:"keadaanLahir", label:"Keadaan saat lahir", type:"radio", options:["Segera menangis","Menangis saat beberapa saat","Tidak menangis"] },
-    { key:"bbl", label:"BBL", type:"text", suffix:"gr" },
-    { key:"pbl", label:"PBL", type:"text", suffix:"cm" },
+    { key:"usiaKehamilan", label:"Usia Kehamilan", type:"text", optional:true },
+    { key:"anakKe", label:"Anak ke", type:"text", optional:true },
+    { key:"riwayatPenyakitHamil", label:"Riwayat penyakit selama kehamilan", type:"radio", options:["Tidak ada","Hipertensi","Asma","Toxoplasma","DM","Jantung","Thypoid","TBC","Lain-lain"], allowCustom:true, optional:true },
+    { key:"komplikasiPersalinan", label:"Komplikasi saat persalinan", type:"radio", options:["Tidak ada","Kejang","Pendarahan","Lain-lain"], allowCustom:true, optional:true },
+    { key:"tempatLahir", label:"Tempat kelahiran", type:"radio", options:["Rumah sakit","Puskesmas","BPM","Lain-lain"], allowCustom:true, optional:true },
+    { key:"jenisPersalinan", label:"Jenis persalinan", type:"radio", options:["Spontan","Sectio C","Vaccum eks","Forcep eks.","Alasan tindakan"], allowCustom:true, optional:true },
+    { key:"ditolongOleh", label:"Ditolong oleh", type:"radio", options:["Dokter","Bidan"], optional:true },
+    { key:"keadaanLahir", label:"Keadaan saat lahir", type:"radio", options:["Segera menangis","Menangis saat beberapa saat","Tidak menangis"], optional:true },
+    { key:"bbl", label:"BBL", type:"text", suffix:"gr", optional:true },
+    { key:"pbl", label:"PBL", type:"text", suffix:"cm", optional:true },
   ]},
 
   // ===== POLA AKTIFITAS =====
@@ -128,9 +103,8 @@ export const assessmentSections: SectionDef[] = [
     { key:"kesadaran", label:"Kesadaran", type:"radio", options:["Komposmentis","Apatis","Somnolen","Stupor","Koma"] },
     { key:"pupil", label:"Pupil", type:"radio", options:["Isokor","Anisokor"], allowCustom:true },
     { key:"pupilSize", label:"Ukuran Pupil", type:"text", suffix:"mm" },
-    { key:"pergerakan", label:"Pergerakan", type:"radio", options:["Aktif","Lemah"] },
     { key:"kejang", label:"Kejang", type:"radio", options:["Tidak ada","Subtle","Tonik-klonik"] },
-    { key:"tangis", label:"Tangis", type:"radio", options:["Kuat","Lemah","Melengking","Merintih","Tidak menangis"] },
+    { key:"gcs", label:"GCS", type:"textarea" },
   ]},
 
   // ===== TANDA-TANDA VITAL =====
@@ -139,7 +113,7 @@ export const assessmentSections: SectionDef[] = [
     { key:"metodeSuhu", label:"Metode pengukuran suhu", type:"radio", options:["Aksila","Rectal"] },
     { key:"td", label:"Tekanan darah", type:"text", suffix:"mmHg" },
     { key:"rr", label:"RR", type:"text", suffix:"/ menit" },
-    { key:"keteraturan", label:"Keteraturan", type:"radio", options:["Teratur","Tidak teratur"] },
+    { key:"nadi", label:"Nadi", type:"text", suffix:"/ menit" },
   ]},
 
   // ===== NYERI =====
@@ -265,8 +239,10 @@ export const assessmentSections: SectionDef[] = [
 ];
 
 // Build default values from sections
-export function buildDefaults(): Record<string,string> {
-  const d: Record<string,string> = {};
-  for (const s of assessmentSections) for (const f of s.fields) d[f.key] = "";
+export function buildDefaults(): Record<string, any> {
+  const d: Record<string, any> = {};
+  for (const s of assessmentSections) for (const f of s.fields) {
+    d[f.key] = f.type === "checkbox" ? [] : "";
+  }
   return d;
 }

@@ -3,7 +3,7 @@ import { getSession } from './session';
 
 export async function logAudit(
   action: 'CREATE' | 'UPDATE' | 'DELETE',
-  entity: 'Patient' | 'InitialAssessment' | 'Cppt' | 'LabResult' | 'User' | 'AiSummary',
+  entity: 'Patient' | 'InitialAssessment' | 'Resume' | 'Cppt' | 'LabResult' | 'User' | 'AiSummary',
   entityId: string,
   changes: any
 ) {

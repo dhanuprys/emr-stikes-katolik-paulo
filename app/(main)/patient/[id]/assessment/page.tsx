@@ -5,6 +5,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { saveAssessmentAction, getAssessmentAction } from "@/app/actions/assessment";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Loader2, Check, Plus, Trash2, FileDown } from "lucide-react";
@@ -141,9 +142,9 @@ export default function AssessmentPage({
               <div key={f.id} className="p-5 border rounded-lg bg-slate-50/50 relative group transition-colors hover:bg-slate-50">
                 <Button type="button" variant="ghost" size="icon" className="absolute top-3 right-3 text-destructive opacity-0 group-hover:opacity-100 transition-opacity hover:bg-destructive/10" onClick={() => rmDx(i)}><Trash2 className="h-4 w-4" /></Button>
                 <div className="grid md:grid-cols-3 gap-5 pr-10">
-                  <div className="space-y-1.5"><Label className="text-slate-600 font-semibold">Diagnosis Keperawatan</Label><Input {...register(`diagnosaKep.${i}.diagnosa`)} className="bg-white" /></div>
-                  <div className="space-y-1.5"><Label className="text-slate-600 font-semibold">Etiologi</Label><Input {...register(`diagnosaKep.${i}.etiologi`)} className="bg-white" /></div>
-                  <div className="space-y-1.5"><Label className="text-slate-600 font-semibold">Prioritas</Label><Input {...register(`diagnosaKep.${i}.prioritas`)} className="bg-white" /></div>
+                  <div className="space-y-1.5"><Label className="text-slate-600 font-semibold">Diagnosis Keperawatan</Label><Textarea {...register(`diagnosaKep.${i}.diagnosa`)} className="bg-white" style={{ minHeight: '150px' }} /></div>
+                  <div className="space-y-1.5"><Label className="text-slate-600 font-semibold">Etiologi</Label><Textarea {...register(`diagnosaKep.${i}.etiologi`)} className="bg-white" style={{ minHeight: '150px' }} /></div>
+                  <div className="space-y-1.5"><Label className="text-slate-600 font-semibold">Prioritas</Label><Textarea {...register(`diagnosaKep.${i}.prioritas`)} className="bg-white" style={{ minHeight: '150px' }} /></div>
                 </div>
               </div>
             ))}
@@ -162,9 +163,9 @@ export default function AssessmentPage({
               <div key={f.id} className="p-5 border rounded-lg bg-slate-50/50 relative group transition-colors hover:bg-slate-50">
                 <Button type="button" variant="ghost" size="icon" className="absolute top-3 right-3 text-destructive opacity-0 group-hover:opacity-100 transition-opacity hover:bg-destructive/10" onClick={() => rmRk(i)}><Trash2 className="h-4 w-4" /></Button>
                 <div className="grid md:grid-cols-3 gap-5 pr-10">
-                  <div className="space-y-1.5"><Label className="text-slate-600 font-semibold">DP</Label><Input {...register(`rencanaKep.${i}.dp`)} className="bg-white" /></div>
-                  <div className="space-y-1.5"><Label className="text-slate-600 font-semibold">Tujuan</Label><Input {...register(`rencanaKep.${i}.tujuan`)} className="bg-white" /></div>
-                  <div className="space-y-1.5"><Label className="text-slate-600 font-semibold">Kriteria Evaluasi</Label><Input {...register(`rencanaKep.${i}.kriteria`)} className="bg-white" /></div>
+                  <div className="space-y-1.5"><Label className="text-slate-600 font-semibold">DP</Label><Textarea {...register(`rencanaKep.${i}.dp`)} className="bg-white" style={{ minHeight: '150px' }} /></div>
+                  <div className="space-y-1.5"><Label className="text-slate-600 font-semibold">Tujuan</Label><Textarea {...register(`rencanaKep.${i}.tujuan`)} className="bg-white" style={{ minHeight: '150px' }} /></div>
+                  <div className="space-y-1.5"><Label className="text-slate-600 font-semibold">Kriteria Evaluasi</Label><Textarea {...register(`rencanaKep.${i}.kriteria`)} className="bg-white" style={{ minHeight: '150px' }} /></div>
                 </div>
               </div>
             ))}
@@ -183,9 +184,9 @@ export default function AssessmentPage({
               <div key={f.id} className="p-5 border rounded-lg bg-slate-50/50 relative group transition-colors hover:bg-slate-50">
                 <Button type="button" variant="ghost" size="icon" className="absolute top-3 right-3 text-destructive opacity-0 group-hover:opacity-100 transition-opacity hover:bg-destructive/10" onClick={() => rmIv(i)}><Trash2 className="h-4 w-4" /></Button>
                 <div className="grid md:grid-cols-3 gap-5 pr-10">
-                  <div className="space-y-1.5"><Label className="text-slate-600 font-semibold">DP</Label><Input {...register(`intervensiKep.${i}.dp`)} className="bg-white" /></div>
-                  <div className="space-y-1.5"><Label className="text-slate-600 font-semibold">Mandiri</Label><Input {...register(`intervensiKep.${i}.mandiri`)} className="bg-white" /></div>
-                  <div className="space-y-1.5"><Label className="text-slate-600 font-semibold">Kolaborasi</Label><Input {...register(`intervensiKep.${i}.kolaborasi`)} className="bg-white" /></div>
+                  <div className="space-y-1.5"><Label className="text-slate-600 font-semibold">DP</Label><Textarea {...register(`intervensiKep.${i}.dp`)} className="bg-white" style={{ minHeight: '150px' }} /></div>
+                  <div className="space-y-1.5"><Label className="text-slate-600 font-semibold">Mandiri</Label><Textarea {...register(`intervensiKep.${i}.mandiri`)} className="bg-white" style={{ minHeight: '150px' }} /></div>
+                  <div className="space-y-1.5"><Label className="text-slate-600 font-semibold">Kolaborasi</Label><Textarea {...register(`intervensiKep.${i}.kolaborasi`)} className="bg-white" style={{ minHeight: '150px' }} /></div>
                 </div>
                 <div className="mt-5 border-t pt-4">
                   <Label className="mb-3 block text-slate-600 font-semibold">Edukasi</Label>

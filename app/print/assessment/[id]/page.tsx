@@ -225,8 +225,8 @@ export default async function AssessmentPrintPage({
               <div className="print-field-grid">
                 {section.fields.map((field) => {
                   const val = data[field.key] || "";
-                  const isWide = field.type === "textarea";
-                  const displayVal = val || "-";
+                  const isWide = field.type === "textarea" || field.type === "checkbox";
+                  const displayVal = Array.isArray(val) ? val.join(", ") : (val || "-");
                   return (
                     <div key={field.key} className={`print-field ${isWide ? "print-field-wide" : ""}`}>
                       <span className="print-f-label">{field.label}{field.suffix ? ` (${field.suffix})` : ""}:</span>

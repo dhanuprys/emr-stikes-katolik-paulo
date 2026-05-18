@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { User, Stethoscope, FileText, FlaskConical, Sparkles } from "lucide-react";
+import { User, Stethoscope, FileText, FlaskConical, Sparkles, BookOpenCheckIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function PatientTabs({ patientId }: { patientId: string }) {
@@ -31,6 +31,12 @@ export function PatientTabs({ patientId }: { patientId: string }) {
       name: "Hasil Lab",
       href: `/patient/${patientId}/lab`,
       icon: FlaskConical,
+      exact: false,
+    },
+    {
+      name: "Resume",
+      href: `/patient/${patientId}/resume`,
+      icon: BookOpenCheckIcon,
       exact: false,
     },
     {
