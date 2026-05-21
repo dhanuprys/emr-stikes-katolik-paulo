@@ -22,7 +22,7 @@ export default function NewCpptPage({
 
   const [patientId, setPatientId] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
-  
+
   // Form State
   const [tanggal, setTanggal] = useState("");
   const [waktu, setWaktu] = useState("");
@@ -48,7 +48,7 @@ export default function NewCpptPage({
           const d = new Date(res.tanggal);
           d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
           setTanggal(d.toISOString().slice(0, 16));
-          
+
           setWaktu(res.waktu);
           setSubjektif(res.subjektif);
           setObjektif(res.objektif);
@@ -98,7 +98,7 @@ export default function NewCpptPage({
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-xl font-semibold">{editingId ? "Edit CPPT" : "Tambah CPPT Baru"}</h2>
+          <h2 className="text-xl font-semibold">{editingId ? "Edit Timbang Terima" : "Tambah Timbang Terima Baru"}</h2>
           <p className="text-sm text-muted-foreground">Isi catatan perkembangan menggunakan format SOAP</p>
         </div>
         <Button variant="outline" asChild>
@@ -118,11 +118,11 @@ export default function NewCpptPage({
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="tanggal">Tanggal & Waktu <span className="text-destructive text-slate-600 font-semibold">*</span></Label>
-                <DatePicker 
-                  id="tanggal" 
-                  name="tanggal" 
-                  withTime 
-                  required 
+                <DatePicker
+                  id="tanggal"
+                  name="tanggal"
+                  withTime
+                  required
                   value={tanggal}
                   onChange={(val) => setTanggal(val)}
                 />
@@ -138,11 +138,11 @@ export default function NewCpptPage({
                 {state?.errors?.waktu && <p className="text-sm text-destructive">{state.errors.waktu[0]}</p>}
               </div>
             </div>
-            
+
             {editingId && !editIdParam && (
               <div className="bg-amber-50 text-amber-800 p-3 rounded-md text-sm flex gap-2 items-center">
-                <Info className="h-4 w-4" /> 
-                <span>CPPT untuk shift ini sudah ada. Mengedit data yang sudah ada.</span>
+                <Info className="h-4 w-4" />
+                <span>Catatan Timbang Terima untuk shift ini sudah ada. Mengedit data yang sudah ada.</span>
               </div>
             )}
           </CardContent>
@@ -164,19 +164,19 @@ export default function NewCpptPage({
               <Textarea id="subjektif" name="subjektif" required className="h-24 bg-white" value={subjektif} onChange={(e) => setSubjektif(e.target.value)} />
               {state?.errors?.subjektif && <p className="text-sm text-destructive">{state.errors.subjektif[0]}</p>}
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="objektif" className="text-base text-slate-600 font-semibold">O - Objektif <span className="text-destructive">*</span></Label>
               <Textarea id="objektif" name="objektif" required className="h-24 bg-white" value={objektif} onChange={(e) => setObjektif(e.target.value)} />
               {state?.errors?.objektif && <p className="text-sm text-destructive">{state.errors.objektif[0]}</p>}
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="assessment" className="text-base text-slate-600 font-semibold">A - Assessment <span className="text-destructive">*</span></Label>
               <Textarea id="assessment" name="assessment" required className="h-20 bg-white" value={assessment} onChange={(e) => setAssessment(e.target.value)} />
               {state?.errors?.assessment && <p className="text-sm text-destructive">{state.errors.assessment[0]}</p>}
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="planning" className="text-base text-slate-600 font-semibold">P - Planning <span className="text-destructive">*</span></Label>
               <Textarea id="planning" name="planning" required className="h-24 bg-white" value={planning} onChange={(e) => setPlanning(e.target.value)} />
@@ -193,7 +193,7 @@ export default function NewCpptPage({
 
         <div className="mt-6 flex justify-end">
           <Button type="submit" size="lg" disabled={pending || isLoading} className="w-full sm:w-auto">
-            {pending ? "Menyimpan..." : (editingId ? "Update CPPT" : "Simpan CPPT")}
+            {pending ? "Menyimpan..." : (editingId ? "Update Timbang Terima" : "Simpan Timbang Terima")}
           </Button>
         </div>
       </form>

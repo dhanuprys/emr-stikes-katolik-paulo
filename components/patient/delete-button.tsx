@@ -34,7 +34,7 @@ export function DeletePatientButton({ id, name }: { id: string, name: string }) 
         onClose={() => setIsOpen(false)}
         onConfirm={handleDelete}
         title="Hapus Pasien"
-        description={`Apakah Anda yakin ingin menghapus pasien "${name}"? Semua rekam medis (Asesmen, CPPT, Hasil Lab) terkait pasien ini akan terhapus secara permanen.`}
+        description={`Apakah Anda yakin ingin menghapus pasien "${name}"? Semua rekam medis (Asesmen, Timbang Terima, Observasi dan Tindakan, Hasil Lab) terkait pasien ini akan terhapus secara permanen.`}
         isLoading={isPending}
         isDestructive={true}
         requireInput="KONFIRMASI"

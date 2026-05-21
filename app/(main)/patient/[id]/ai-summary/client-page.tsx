@@ -14,7 +14,7 @@ function LoadingState({ isApiDone }: { isApiDone?: boolean }) {
   const steps = [
     "Mengumpulkan data rekam medis...",
     "Membaca asesmen awal medis & keperawatan...",
-    "Menganalisis catatan harian CPPT...",
+    "Menganalisis catatan harian Catatan Timbang Terima...",
     "Mengidentifikasi prioritas masalah klinis...",
     "Menyusun ringkasan terstruktur...",
     "Melakukan finalisasi menggunakan AI...",
@@ -40,18 +40,18 @@ function LoadingState({ isApiDone }: { isApiDone?: boolean }) {
     <Card className="border-dashed overflow-hidden relative shadow-sm">
       {/* Animated background gradient */}
       <div className="absolute inset-0 bg-linear-to-br from-emerald-50/50 via-white to-emerald-50/50 animate-pulse" />
-      
+
       <CardContent className="py-16 flex flex-col items-center justify-center min-h-[700px] relative z-10 overflow-hidden">
-        
+
         {/* Phase 1: Initial Bot Animation */}
         <div className={`flex flex-col items-center absolute transition-all duration-700 ease-in-out ${showSkeleton ? 'opacity-0 scale-90 pointer-events-none blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
           <div className="relative w-32 h-32 flex items-center justify-center mb-6">
             <div className="absolute inset-0 rounded-full border-4 border-dashed border-emerald-200 animate-[spin_4s_linear_infinite]" />
             <div className="absolute inset-2 rounded-full border border-indigo-300 animate-ping opacity-20" />
             <div className="absolute inset-4 rounded-full bg-linear-to-tr from-emerald-500 to-emerald-400 shadow-[0_0_30px_rgba(139,92,246,0.5)] animate-pulse" />
-            
+
             <Bot className="h-10 w-10 text-white relative z-10 animate-bounce" />
-            
+
             <Sparkles className="absolute top-0 right-2 h-5 w-5 text-yellow-400 animate-[bounce_2s_ease-in-out_infinite_0.2s]" />
             <Sparkles className="absolute bottom-2 left-0 h-4 w-4 text-yellow-300 animate-[bounce_2.5s_ease-in-out_infinite_0.5s]" />
             <Sparkles className="absolute top-6 left-1 h-3 w-3 text-yellow-200 animate-[ping_3s_ease-in-out_infinite_1s]" />
@@ -63,11 +63,11 @@ function LoadingState({ isApiDone }: { isApiDone?: boolean }) {
 
         {/* Phase 2: Skeleton + Progress Text */}
         <div className={`flex flex-col items-center w-full max-w-3xl absolute transition-all duration-1000 ease-out delay-300 ${showSkeleton ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12 pointer-events-none'}`}>
-          
+
           {/* Skeleton Document */}
           <div className="w-full bg-white/70 border border-emerald-100 rounded-xl p-8 shadow-sm text-left relative overflow-hidden mb-8">
             <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-linear-to-r from-transparent via-white/60 to-transparent z-10" />
-            
+
             <div className="h-6 w-2/5 bg-slate-200 rounded-md animate-pulse mb-6" />
             <div className="space-y-3 mb-8">
               <div className="h-4 w-full bg-slate-200 rounded-md animate-pulse" />
@@ -75,7 +75,7 @@ function LoadingState({ isApiDone }: { isApiDone?: boolean }) {
               <div className="h-4 w-full bg-slate-200 rounded-md animate-pulse" />
               <div className="h-4 w-4/5 bg-slate-200 rounded-md animate-pulse" />
             </div>
-            
+
             <div className="h-6 w-1/3 bg-slate-200 rounded-md animate-pulse mb-4" />
             <div className="space-y-3 pl-4 border-l-4 border-slate-100">
               <div className="h-4 w-3/4 bg-slate-200 rounded-md animate-pulse" />
@@ -122,7 +122,7 @@ export function AiSummaryClient({
       // Phase 1 (bot) is 2.5s, Phase 2 (skeleton) will play for at least 4s
       const minWaitPromise = new Promise((resolve) => setTimeout(resolve, 6500));
       const resultPromise = generateAiSummaryAction(patientId);
-      
+
       // Wait for both the API to finish AND the threshold timer
       const [result] = await Promise.all([resultPromise, minWaitPromise]);
 
@@ -196,7 +196,7 @@ export function AiSummaryClient({
             <div>
               <h3 className="text-lg font-semibold">Belum ada ringkasan AI</h3>
               <p className="text-sm text-muted-foreground mt-1 max-w-md">
-                Klik tombol <strong>"Buat Ringkasan AI"</strong> untuk menganalisis data asesmen awal dan CPPT pasien secara otomatis menggunakan kecerdasan buatan.
+                Klik tombol <strong>"Buat Ringkasan AI"</strong> untuk menganalisis data asesmen awal dan informasi timang terima pasien secara otomatis menggunakan kecerdasan buatan.
               </p>
             </div>
           </CardContent>
@@ -206,7 +206,7 @@ export function AiSummaryClient({
       {summary && !isPending && (
         <Card className="overflow-hidden border-emerald-100 shadow-sm">
           <CardContent className="p-0 transition-opacity duration-500">
-            
+
             {/* Minimal top bar for date and model only */}
             <div className="flex justify-between items-center bg-slate-50/80 border-b px-6 py-3">
               <div className="flex items-center gap-2 text-sm text-slate-500 font-medium">

@@ -32,12 +32,12 @@ export async function getCpptByIdAction(id: string) {
 
 export async function saveCpptAction(patientId: string, editingId: string | null, prevState: any, formData: FormData) {
   const data = Object.fromEntries(formData.entries());
-  
+
   const validatedFields = cpptSchema.safeParse(data);
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: "Gagal menyimpan CPPT. Periksa kembali form anda.",
+      message: "Gagal menyimpan Catatan Timbang Terima. Periksa kembali form anda.",
     };
   }
 
@@ -63,7 +63,7 @@ export async function saveCpptAction(patientId: string, editingId: string | null
     }
   } catch (error: any) {
     return {
-      message: error.message || "Gagal menyimpan CPPT",
+      message: error.message || "Gagal menyimpan Catatan Timbang Terima",
     };
   }
 
@@ -78,7 +78,7 @@ export async function deleteCpptAction(id: string) {
     revalidatePath(`/patient/${cppt.patientId}/cppt`);
     return { success: true };
   } catch (error: any) {
-    console.error("Delete CPPT error:", error);
-    return { error: error.message || "Gagal menghapus CPPT" };
+    console.error("Delete Catatan Timbang Terima error:", error);
+    return { error: error.message || "Gagal menghapus catatan Timbang Terima" };
   }
 }

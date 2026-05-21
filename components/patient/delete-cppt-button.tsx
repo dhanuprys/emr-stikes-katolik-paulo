@@ -25,7 +25,7 @@ export function DeleteCpptButton({ id, date }: { id: string, date: string }) {
 
   return (
     <>
-      <Button variant="ghost" size="sm" onClick={() => setIsOpen(true)} title="Hapus CPPT" className="text-rose-500 hover:text-rose-600 hover:bg-rose-50">
+      <Button variant="ghost" size="sm" onClick={() => setIsOpen(true)} title="Hapus catatan Timbang Terima" className="text-rose-500 hover:text-rose-600 hover:bg-rose-50">
         <Trash2 className="h-4 w-4" />
       </Button>
 
@@ -33,8 +33,8 @@ export function DeleteCpptButton({ id, date }: { id: string, date: string }) {
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         onConfirm={handleDelete}
-        title="Hapus Catatan CPPT"
-        description={`Apakah Anda yakin ingin menghapus catatan CPPT tanggal ${date}? Tindakan ini tidak dapat dibatalkan.`}
+        title="Hapus Catatan Timbang Terima"
+        description={`Apakah Anda yakin ingin menghapus catatan Timbang Terima tanggal ${date}? Tindakan ini tidak dapat dibatalkan.`}
         isLoading={isPending}
         isDestructive={true}
       />

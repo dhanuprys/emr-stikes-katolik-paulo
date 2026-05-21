@@ -119,7 +119,7 @@ ${patientContext}
 ## ASESMEN AWAL MEDIS & KEPERAWATAN
 ${assessmentText}
 
-## CATATAN PERKEMBANGAN PASIEN TERINTEGRASI (CPPT)
+## CATATAN PERKEMBANGAN PASIEN TERINTEGRASI (Catatan Timbang Terima)
 ${cpptText}
 
 ---
@@ -134,7 +134,7 @@ Buatkan ringkasan klinis **dalam Bahasa Indonesia** yang komprehensif, terstrukt
 
 3. **Diagnosa Keperawatan & Rencana Perawatan**: Sajikan diagnosis keperawatan yang sudah ditegakkan beserta tujuan, kriteria evaluasi, dan intervensi yang direncanakan.
 
-4. **Perkembangan Kondisi Pasien (Berdasarkan CPPT)**: Analisis kronologis perkembangan pasien dari catatan SOAP. Identifikasi tren (membaik/memburuk), respons terhadap intervensi, dan perubahan signifikan.
+4. **Perkembangan Kondisi Pasien (Berdasarkan Catatan Timbang Terima)**: Analisis kronologis perkembangan pasien dari catatan SOAP. Identifikasi tren (membaik/memburuk), respons terhadap intervensi, dan perubahan signifikan.
 
 5. **Risiko & Hal yang Perlu Diperhatikan**: Identifikasi potensi risiko (jatuh, infeksi, alergi, dll.) dan hal-hal yang memerlukan monitoring ketat.
 

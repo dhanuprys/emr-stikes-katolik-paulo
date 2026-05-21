@@ -83,9 +83,9 @@ export function AuditLogsClient({ initialLogs }: { initialLogs: any[] }) {
                       {log.entityId}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right">
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
+                      <Button
+                        variant="ghost"
+                        size="sm"
                         onClick={() => toggleRow(log.id)}
                         className="text-primary hover:text-primary/80"
                       >
