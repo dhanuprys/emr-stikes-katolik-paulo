@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -135,32 +135,48 @@ export function ObservationClientPage({
                       </TableHeader>
                       <TableBody>
                         {items.map((obs) => (
-                          <TableRow key={obs.id}>
-                            <TableCell className="font-medium">
-                              <div className="flex items-center gap-2">
-                                <Clock className="h-3 w-3 text-muted-foreground" /> 
-                                {new Date(obs.tanggal).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit'})}
-                              </div>
-                            </TableCell>
-                            <TableCell>{obs.tensi}</TableCell>
-                            <TableCell>{obs.nadi}</TableCell>
-                            <TableCell>{obs.rr}</TableCell>
-                            <TableCell>
-                              <Badge variant={obs.balans < 0 ? "destructive" : "default"} className={obs.balans >= 0 ? "bg-emerald-600 hover:bg-emerald-700" : ""}>
-                                {obs.balans > 0 ? "+" : ""}{obs.balans}
-                              </Badge>
-                            </TableCell>
-                            <TableCell className="text-right">
-                              <div className="flex items-center justify-end gap-1">
-                                <Button variant="ghost" size="sm" asChild className="h-8 text-muted-foreground hover:text-primary">
-                                  <Link href={`/patient/${patientId}/observation/new?edit=${obs.id}`}>
-                                    <Edit className="h-4 w-4 mr-1.5" /> Edit
-                                  </Link>
-                                </Button>
-                                <DeleteObservationButton id={obs.id} date={displayDateStr(dateStr)} />
-                              </div>
-                            </TableCell>
-                          </TableRow>
+                          <React.Fragment key={obs.id}>
+                            <TableRow className={obs.keistimewaan ? "border-b-0" : ""}>
+                              <TableCell className="font-medium">
+                                <div className="flex items-center gap-2">
+                                  <Clock className="h-3 w-3 text-muted-foreground" /> 
+                                  {new Date(obs.tanggal).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit'})}
+                                </div>
+                              </TableCell>
+                              <TableCell>{obs.tensi}</TableCell>
+                              <TableCell>{obs.nadi}</TableCell>
+                              <TableCell>{obs.rr}</TableCell>
+                              <TableCell>
+                                <Badge variant={obs.balans < 0 ? "destructive" : "default"} className={obs.balans >= 0 ? "bg-emerald-600 hover:bg-emerald-700" : ""}>
+                                  {obs.balans > 0 ? "+" : ""}{obs.balans}
+                                </Badge>
+                              </TableCell>
+                              <TableCell className="text-right">
+                                <div className="flex items-center justify-end gap-1">
+                                  <Button variant="ghost" size="sm" asChild className="h-8 text-muted-foreground hover:text-primary">
+                                    <Link href={`/patient/${patientId}/observation/new?edit=${obs.id}`}>
+                                      <Edit className="h-4 w-4 mr-1.5" /> Edit
+                                    </Link>
+                                  </Button>
+                                  <DeleteObservationButton id={obs.id} date={displayDateStr(dateStr)} />
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                            {obs.keistimewaan && (
+                              <TableRow className="bg-slate-50/40 hover:bg-slate-50/40">
+                                <TableCell colSpan={6} className="pt-0 pb-4 pl-[3.25rem]">
+                                  <div className="bg-white border rounded-md p-3 shadow-sm relative">
+                                    <div className="absolute -top-2.5 left-4 bg-white px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
+                                      Keistimewaan
+                                    </div>
+                                    <div className="text-sm text-slate-700 whitespace-pre-wrap mt-1 leading-relaxed">
+                                      {obs.keistimewaan}
+                                    </div>
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                            )}
+                          </React.Fragment>
                         ))}
                       </TableBody>
                     </Table>

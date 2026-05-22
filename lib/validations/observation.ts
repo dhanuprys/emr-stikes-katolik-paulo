@@ -16,15 +16,14 @@ export const cairanKeluarSchema = z.object({
 export const observationSchema = z.object({
   tanggal: z.string().min(1, "Tanggal dan waktu diperlukan"),
   
-  nadi: z.string().min(1, "Nadi diperlukan"),
-  tensi: z.string().min(1, "Tensi diperlukan"),
-  rr: z.string().min(1, "RR diperlukan"),
-  spo2: z.string().min(1, "SPO2 diperlukan"),
-  nrs: z.string().min(1, "NRS diperlukan"),
-  gcs: z.string().min(1, "GCS diperlukan"),
-  pupil: z.string().min(1, "Pupil diperlukan"),
-  infus: z.string().min(1, "Infus diperlukan"),
-  ews: z.string().min(1, "EWS diperlukan"),
+  nadi: z.string().optional().default(""),
+  tensi: z.string().optional().default(""),
+  rr: z.string().optional().default(""),
+  spo2: z.string().optional().default(""),
+  nrs: z.string().optional().default(""),
+  gcs: z.string().optional().default(""),
+  pupil: z.string().optional().default(""),
+  ews: z.string().optional().default(""),
   
   cm: z.array(cairanMasukSchema).default([]),
   ck: z.array(cairanKeluarSchema).default([]),

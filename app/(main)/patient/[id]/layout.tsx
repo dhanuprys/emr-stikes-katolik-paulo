@@ -78,7 +78,7 @@ export default async function PatientLayout({
               <div className="flex items-center gap-2">
                 <span>Status:</span>
                 {patient.tanggalKeluar ? (
-                  <Badge variant="secondary">Keluar ({formatDate(patient.tanggalKeluar)})</Badge>
+                  <Badge variant="destructive" className="bg-red-500 hover:bg-red-600">KRS ({formatDate(patient.tanggalKeluar)})</Badge>
                 ) : (
                   <Badge variant="default" className="bg-emerald-500 hover:bg-emerald-600">Dirawat</Badge>
                 )}

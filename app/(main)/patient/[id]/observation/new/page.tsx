@@ -35,7 +35,7 @@ export default function NewObservationPage({
     resolver: zodResolver(observationSchema) as any,
     defaultValues: {
       tanggal: new Date().toISOString().slice(0, 16),
-      nadi: "", tensi: "", rr: "", spo2: "", nrs: "", gcs: "", pupil: "", infus: "", ews: "",
+      nadi: "", tensi: "", rr: "", spo2: "", nrs: "", gcs: "", pupil: "", ews: "",
       cm: [], ck: [],
       balans: 0,
       balansStart: null,
@@ -74,7 +74,6 @@ export default function NewObservationPage({
           setValue("nrs", res.nrs);
           setValue("gcs", res.gcs);
           setValue("pupil", res.pupil);
-          setValue("infus", res.infus);
           setValue("ews", res.ews);
           setValue("cm", res.cm as any);
           setValue("ck", res.ck as any);
@@ -192,7 +191,6 @@ export default function NewObservationPage({
             <div className="space-y-2"><Label>NRS</Label><Input {...register("nrs")} className="bg-white" />{errors.nrs && <p className="text-sm text-destructive">{errors.nrs.message}</p>}</div>
             <div className="space-y-2"><Label>GCS</Label><Input {...register("gcs")} className="bg-white" />{errors.gcs && <p className="text-sm text-destructive">{errors.gcs.message}</p>}</div>
             <div className="space-y-2"><Label>Pupil / R.C</Label><Input {...register("pupil")} className="bg-white" />{errors.pupil && <p className="text-sm text-destructive">{errors.pupil.message}</p>}</div>
-            <div className="space-y-2"><Label>Infus</Label><Input {...register("infus")} className="bg-white" />{errors.infus && <p className="text-sm text-destructive">{errors.infus.message}</p>}</div>
             <div className="space-y-2"><Label>EWS</Label><Input {...register("ews")} className="bg-white" />{errors.ews && <p className="text-sm text-destructive">{errors.ews.message}</p>}</div>
           </CardContent>
         </Card>

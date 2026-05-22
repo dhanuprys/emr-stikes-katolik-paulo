@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Plus, Search, User, FileText, Edit, AlertCircle, X } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 
+import bgImage from "@/components/assets/rkz.jpg";
+
 export default async function DashboardPage({
   searchParams,
 }: {
@@ -64,8 +66,20 @@ export default async function DashboardPage({
   const totalPages = Math.ceil(total / limit);
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div className="relative min-h-[calc(100vh-4rem)]">
+      <div 
+        className="fixed inset-0 z-0 pointer-events-none"
+        style={{
+          backgroundImage: `url(${bgImage.src})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="absolute inset-0 bg-white/85" />
+      </div>
+      
+      <div className="relative z-10 space-y-6 pb-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Daftar Pasien</h1>
           <p className="text-muted-foreground">Kelola data rekam medis pasien</p>
@@ -155,7 +169,7 @@ export default async function DashboardPage({
                       <Badge variant="outline" className="bg-amber-100 text-amber-800 border-amber-300">Jadwal Kontrol</Badge>
                     )}
                     {patient.tanggalKeluar ? (
-                      <Badge variant="secondary">Keluar</Badge>
+                      <Badge variant="destructive" className="bg-red-500 hover:bg-red-600">KRS</Badge>
                     ) : (
                       <Badge variant="default" className="bg-emerald-500 hover:bg-emerald-600">Dirawat</Badge>
                     )}
@@ -209,6 +223,7 @@ export default async function DashboardPage({
           </Button>
         </div>
       )}
+      </div>
     </div>
   );
 }

@@ -25,16 +25,18 @@ export async function saveResumeAction(patientId: string, data: any) {
     });
 
     // Extract tanggalKontrol and sync to Patient model
-    if (data.tanggalKontrol) {
+    const updateData: any = {};
+    if (data.tanggalKontrol !== undefined) {
+      updateData.tanggalKontrol = data.tanggalKontrol ? new Date(data.tanggalKontrol) : null;
+    }
+    if (data.resumeTglKeluar !== undefined) {
+      updateData.tanggalKeluar = data.resumeTglKeluar ? new Date(data.resumeTglKeluar) : null;
+    }
+
+    if (Object.keys(updateData).length > 0) {
       await prisma.patient.update({
         where: { id: patientId },
-        data: { tanggalKontrol: new Date(data.tanggalKontrol) }
-      });
-    } else {
-      // Optional: Clear it if removed from form
-      await prisma.patient.update({
-        where: { id: patientId },
-        data: { tanggalKontrol: null }
+        data: updateData
       });
     }
 

@@ -187,7 +187,6 @@ model Observation {
   nrs          String
   gcs          String
   pupil        String
-  infus        String
   ews          String
   
   cm           CairanMasuk[]
