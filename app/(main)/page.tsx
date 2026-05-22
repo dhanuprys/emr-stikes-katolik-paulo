@@ -4,30 +4,46 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Search, User, FileText, Edit } from "lucide-react";
+import { Plus, Search, User, FileText, Edit, AlertCircle, X } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 
 export default async function DashboardPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; page?: string }>;
+  searchParams: Promise<{ q?: string; page?: string; filter?: string }>;
 }) {
-  const { q, page } = await searchParams;
+  const { q, page, filter } = await searchParams;
   const searchQuery = q || "";
   const currentPage = parseInt(page || "1", 10);
   const limit = 12;
   const skip = (currentPage - 1) * limit;
 
-  const whereClause = searchQuery
+  let whereClause: any = searchQuery
     ? {
-        OR: [
-          { nama: { contains: searchQuery, mode: "insensitive" as any } },
-          { noRm: { contains: searchQuery, mode: "insensitive" as any } },
-        ],
-      }
+      OR: [
+        { nama: { contains: searchQuery, mode: "insensitive" as any } },
+        { noRm: { contains: searchQuery, mode: "insensitive" as any } },
+      ],
+    }
     : {};
 
-  const [patients, total] = await Promise.all([
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const controlEnd = new Date(today);
+  controlEnd.setDate(today.getDate() + 2);
+  controlEnd.setHours(23, 59, 59, 999);
+
+  if (filter === "kontrol") {
+    whereClause = {
+      ...whereClause,
+      tanggalKontrol: {
+        gte: today,
+        lte: controlEnd,
+      }
+    };
+  }
+
+  const [patients, total, controlCount] = await Promise.all([
     prisma.patient.findMany({
       where: whereClause,
       orderBy: { createdAt: "desc" },
@@ -35,6 +51,14 @@ export default async function DashboardPage({
       take: limit,
     }),
     prisma.patient.count({ where: whereClause }),
+    prisma.patient.count({
+      where: {
+        tanggalKontrol: {
+          gte: today,
+          lte: controlEnd,
+        }
+      }
+    }),
   ]);
 
   const totalPages = Math.ceil(total / limit);
@@ -55,16 +79,42 @@ export default async function DashboardPage({
 
       <div className="flex items-center space-x-2">
         <form className="relative flex-1 max-w-md" action="/">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground z-10" />
           <Input
             type="search"
             name="q"
             placeholder="Cari nama atau No. RM..."
-            className="pl-8"
+            className="pl-9"
             defaultValue={searchQuery}
           />
+          {filter && <input type="hidden" name="filter" value={filter} />}
         </form>
       </div>
+
+      {controlCount > 0 && filter !== "kontrol" && (
+        <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-md shadow-sm flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <AlertCircle className="h-5 w-5 text-amber-600" />
+            <p className="text-amber-800 font-medium">
+              Terdapat {controlCount} pasien yang membutuhkan kontrol dalam 2 hari ke depan.
+            </p>
+          </div>
+          <Button variant="outline" size="sm" className="bg-white text-amber-700 border-amber-200 hover:bg-amber-100" asChild>
+            <Link href="/?filter=kontrol">Lihat Pasien</Link>
+          </Button>
+        </div>
+      )}
+
+      {filter === "kontrol" && (
+        <div className="flex items-center gap-2 mb-4">
+          <Badge variant="secondary" className="px-3 py-1.5 text-sm font-medium bg-amber-100 text-amber-800 hover:bg-amber-200">
+            Filter: Pasien Butuh Kontrol
+          </Badge>
+          <Button variant="ghost" size="sm" className="h-8 px-2 text-muted-foreground" asChild>
+            <Link href="/"><X className="h-4 w-4 mr-1" /> Hapus Filter</Link>
+          </Button>
+        </div>
+      )}
 
       {patients.length === 0 ? (
         <div className="text-center py-12 bg-white rounded-xl border border-dashed">
@@ -80,7 +130,7 @@ export default async function DashboardPage({
           )}
         </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
           {patients.map((patient) => (
             <Card key={patient.id} className="hover:border-primary/50 transition-colors h-full flex flex-col">
               <CardHeader className="p-4 pb-2">
@@ -93,17 +143,23 @@ export default async function DashboardPage({
               </CardHeader>
               <CardContent className="p-4 pt-2 flex-1">
                 <div className="text-sm space-y-1 mb-3">
-                  <p><span className="text-muted-foreground">Gender:</span> {patient.gender === "L" ? "Laki-laki" : "Perempuan"}</p>
-                  <p><span className="text-muted-foreground">Umur:</span> {patient.umur}</p>
+                  <p><span className="text-muted-foreground">Gender:</span> {patient.gender === "L" ? "Laki-laki" : "Perempuan"} ({patient.umur} tahun)</p>
                   <p><span className="text-muted-foreground">Paviliun:</span> {patient.paviliun} ({patient.kelas})</p>
+                  {patient.dokter1 && <p className="line-clamp-1"><span className="text-muted-foreground">Dokter:</span> {patient.dokter1}</p>}
+                  {patient.diagnosaMasuk && <p className="line-clamp-2"><span className="text-muted-foreground">Diagnosa:</span> {patient.diagnosaMasuk}</p>}
                 </div>
-                <div className="text-xs text-muted-foreground flex justify-between items-center bg-muted/30 p-2 rounded-md">
+                <div className="text-xs text-muted-foreground flex flex-wrap justify-between items-center gap-2 bg-muted/30 p-2 rounded-md">
                   <span>Masuk: {formatDate(patient.tanggalMasuk)}</span>
-                  {patient.tanggalKeluar ? (
-                    <Badge variant="secondary">Keluar</Badge>
-                  ) : (
-                    <Badge variant="default" className="bg-emerald-500 hover:bg-emerald-600">Dirawat</Badge>
-                  )}
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    {patient.tanggalKontrol && new Date(patient.tanggalKontrol) >= today && new Date(patient.tanggalKontrol) <= controlEnd && (
+                      <Badge variant="outline" className="bg-amber-100 text-amber-800 border-amber-300">Jadwal Kontrol</Badge>
+                    )}
+                    {patient.tanggalKeluar ? (
+                      <Badge variant="secondary">Keluar</Badge>
+                    ) : (
+                      <Badge variant="default" className="bg-emerald-500 hover:bg-emerald-600">Dirawat</Badge>
+                    )}
+                  </div>
                 </div>
               </CardContent>
               <CardFooter className="p-4 pt-0 flex gap-2">

@@ -44,6 +44,8 @@ export function DatePicker({ value, defaultValue, onChange, withTime = false, na
           setTime(format(d, "HH:mm"));
         }
       }
+    } else {
+      setDate(undefined);
     }
   }, [value, withTime]);
 
@@ -60,6 +62,8 @@ export function DatePicker({ value, defaultValue, onChange, withTime = false, na
       } else {
         onChange(format(selectedDate, "yyyy-MM-dd"));
       }
+    } else if (!selectedDate && onChange) {
+      onChange("");
     }
   }
 

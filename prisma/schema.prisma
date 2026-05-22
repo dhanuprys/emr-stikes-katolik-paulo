@@ -13,6 +13,8 @@ model User {
   password  String
   name      String
   createdAt DateTime @default(now())
+  
+  observations Observation[]
 }
 
 model Patient {
@@ -67,6 +69,7 @@ model Patient {
   operasiTindakan2   String?
   hasilPerawatan     String?
   caraKeluar         String?
+  tanggalKontrol     DateTime? // Field untuk indexing jadwal kontrol
 
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
@@ -76,6 +79,7 @@ model Patient {
   cppts              Cppt[]
   labResults         LabResult[]
   aiSummaries        AiSummary[]
+  observations       Observation[]
 }
 
 model InitialAssessment {
@@ -151,4 +155,46 @@ model AuditLog {
   entityId  String
   changes   Json
   timestamp DateTime @default(now())
+}
+
+type CairanMasuk {
+  jenis      String
+  keterangan String?
+  jumlah     Int
+}
+
+type CairanKeluar {
+  jenis      String
+  jenisLain  String?
+  keterangan String?
+  jumlah     Int
+}
+
+model Observation {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  patientId    String         @db.ObjectId
+  patient      Patient        @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  userId       String         @db.ObjectId
+  user         User           @relation(fields: [userId], references: [id])
+  
+  tanggal      DateTime
+  nadi         String
+  tensi        String
+  rr           String
+  spo2         String
+  nrs          String
+  gcs          String
+  pupil        String
+  infus        String
+  ews          String
+  
+  cm           CairanMasuk[]
+  ck           CairanKeluar[]
+  
+  balans       Int
+  balansStart  DateTime?
+  keistimewaan String?
+  
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
 }

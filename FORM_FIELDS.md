@@ -364,6 +364,36 @@ field -> Objektif: textarea
 field -> Assesment: textarea
 field -> Planning: textara
 
+### Observasi dan Tindakan
+
+field -> Tanggal dan waktu: datetime
+field -> Nadi: text
+field -> Tensi: text
+field -> RR: text
+field -> SPO2: text
+field -> NRS: text
+field -> GCS: text
+field -> Pupil / R.C: text
+field -> Infus: text
+field -> EWS: text
+
+**Cairan Masuk (CM)**
+List[]{
+-- field -> Jenis: radio {Infus | Injeksi | Transfusi | Oral}
+-- field -> Keterangan: textarea
+-- field -> Jumlah: text [suffix label: "ml"]
+}
+
+**Cairan Keluar (CK)**
+List[]{
+-- field -> Jenis: radio {BAK | BAB | NGT | Drain | lainnya [can input]}
+-- field -> Keterangan: textarea
+-- field -> Jumlah: text [suffix label: "ml"]
+}
+
+field readonly -> Balans: special logic [Pengurangan dari total CM dan CK (CM-CK), bisa positif bisa negatif] it shows a date start select. So, the system will easily choose or filter balance data based on date start (need to create a new actions for it) / it can be filled manually by user if they want to adjust the data
+field -> Keistimeweaan: textarea
+
 ### Lab Result
 
 field -> Tanggal: date

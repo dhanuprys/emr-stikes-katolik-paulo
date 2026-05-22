@@ -24,6 +24,20 @@ export async function saveResumeAction(patientId: string, data: any) {
       },
     });
 
+    // Extract tanggalKontrol and sync to Patient model
+    if (data.tanggalKontrol) {
+      await prisma.patient.update({
+        where: { id: patientId },
+        data: { tanggalKontrol: new Date(data.tanggalKontrol) }
+      });
+    } else {
+      // Optional: Clear it if removed from form
+      await prisma.patient.update({
+        where: { id: patientId },
+        data: { tanggalKontrol: null }
+      });
+    }
+
     await logAudit("UPDATE", "Resume", resume.id, { saved: true });
 
     revalidatePath(`/patient/${patientId}/resume`);

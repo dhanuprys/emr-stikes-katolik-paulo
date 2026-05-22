@@ -23,6 +23,7 @@ export const resumeSections: SectionDef[] = [
     { key:"resumeKeadaanKrs", label:"Keadaan/hasil pengobatan waktu KRS", type:"textarea" },
     { key:"resumePrognosis", label:"Prognosis", type:"textarea" },
     { key:"resumeInstruksi", label:"Instruksi/Tindak Lanjut", type:"textarea" },
+    { key:"tanggalKontrol", label:"Tanggal Kontrol", type:"datetime", optional:true },
   ]},
 ];
 

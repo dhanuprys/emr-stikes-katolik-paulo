@@ -47,8 +47,8 @@ export function CpptClientPage({
 
   // Group by date
   const grouped: Record<string, typeof initialCppts> = {};
-  
-  const filtered = filterDate 
+
+  const filtered = filterDate
     ? initialCppts.filter(c => formatDateStr(c.tanggal) === filterDate)
     : initialCppts;
 
@@ -69,14 +69,14 @@ export function CpptClientPage({
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-xl font-semibold">Catatan Perkembangan Pasien Terintegrasi (CPPT)</h2>
+          <h2 className="text-xl font-semibold">Catatan Perkembangan Pasien</h2>
           <p className="text-sm text-muted-foreground">Riwayat perkembangan harian pasien</p>
         </div>
         <div className="flex items-center gap-3 w-full sm:w-auto">
           <div className="relative flex-1 sm:w-48">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <DatePicker 
-              className="pl-9 bg-white w-full" 
+            <DatePicker
+              className="pl-9 bg-white w-full"
               value={filterDate}
               onChange={(val) => setFilterDate(val)}
             />
@@ -103,7 +103,7 @@ export function CpptClientPage({
 
             return (
               <div key={dateStr} className="border rounded-xl bg-card overflow-hidden shadow-sm">
-                <button 
+                <button
                   onClick={() => toggleExpand(dateStr)}
                   className="w-full px-4 py-3 bg-muted/30 flex items-center justify-between hover:bg-muted/50 transition-colors"
                 >
@@ -113,7 +113,7 @@ export function CpptClientPage({
                     <Badge variant="outline" className="bg-white/50">{items.length} Catatan</Badge>
                   </div>
                 </button>
-                
+
                 {isExpanded && (
                   <div className="p-4 space-y-4 border-t bg-slate-50/50">
                     {items.map((cppt) => (
@@ -124,7 +124,7 @@ export function CpptClientPage({
                               Shift {cppt.waktu}
                             </Badge>
                             <span className="text-sm text-muted-foreground flex items-center gap-1">
-                              <Clock className="h-3 w-3" /> {new Date(cppt.tanggal).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit'})}
+                              <Clock className="h-3 w-3" /> {new Date(cppt.tanggal).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}
                             </span>
                           </div>
                           <div className="flex items-center gap-1">
