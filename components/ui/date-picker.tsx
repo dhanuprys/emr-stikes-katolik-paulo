@@ -36,16 +36,18 @@ export function DatePicker({ value, defaultValue, onChange, withTime = false, na
 
   // Sync incoming value
   React.useEffect(() => {
-    if (value) {
-      const d = new Date(value);
-      if (!isNaN(d.getTime())) {
-        setDate(d);
-        if (withTime) {
-          setTime(format(d, "HH:mm"));
+    if (value !== undefined) {
+      if (value) {
+        const d = new Date(value);
+        if (!isNaN(d.getTime())) {
+          setDate(d);
+          if (withTime) {
+            setTime(format(d, "HH:mm"));
+          }
         }
+      } else {
+        setDate(undefined);
       }
-    } else {
-      setDate(undefined);
     }
   }, [value, withTime]);
 

@@ -57,7 +57,7 @@ export default async function PatientLayout({
                     {patient.dokter1 && (
                       <div className="flex items-start gap-2">
                         <Stethoscope className="h-4 w-4 mt-0.5 text-primary/70 shrink-0" />
-                        <span className="text-slate-700 font-medium">DPJP: {patient.dokter1}</span>
+                        <span className="text-slate-700 font-medium">DPJP: {[patient.dokter1, patient.dokter2, patient.dokter3, patient.dokter4, patient.dokter5, patient.dokter6].filter(Boolean).join(", ")}</span>
                       </div>
                     )}
                     {patient.diagnosaMasuk && (

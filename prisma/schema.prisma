@@ -51,6 +51,8 @@ model Patient {
   dokter2            String?
   dokter3            String?
   dokter4            String?
+  dokter5            String?
+  dokter6            String?
   diagnosaMasuk      String
   jenisKasus         String // "bedah" or "penyakit dalam"
   

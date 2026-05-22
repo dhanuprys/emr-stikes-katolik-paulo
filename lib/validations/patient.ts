@@ -33,6 +33,8 @@ export const patientSchema = z.object({
   dokter2: z.string().optional().nullable(),
   dokter3: z.string().optional().nullable(),
   dokter4: z.string().optional().nullable(),
+  dokter5: z.string().optional().nullable(),
+  dokter6: z.string().optional().nullable(),
   diagnosaMasuk: z.string().min(1, "Diagnosa Masuk diperlukan"),
   jenisKasus: z.string().min(1, "Jenis kasus diperlukan"),
   

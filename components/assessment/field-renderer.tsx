@@ -14,7 +14,7 @@ export function FieldRenderer({ field, register, control }: { field: FieldDef; r
     return (
       <div className="space-y-2">
         <Label className="text-slate-600 font-semibold">{field.label} {required && <span className="text-destructive">*</span>}</Label>
-        <Textarea {...register(field.key)} className="min-h-[80px] bg-white" />
+        <Textarea {...register(field.key)} className="min-h-[160px] bg-white" />
       </div>
     );
   }

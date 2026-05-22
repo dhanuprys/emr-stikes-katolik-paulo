@@ -178,6 +178,8 @@ export default function NewPatientPage() {
                   <div className="space-y-2"><Label className="text-slate-600 font-semibold" htmlFor="dokter2">Dokter II (Opsional)</Label><Input id="dokter2" name="dokter2"  className="bg-white" /></div>
                   <div className="space-y-2"><Label className="text-slate-600 font-semibold" htmlFor="dokter3">Dokter III (Opsional)</Label><Input id="dokter3" name="dokter3"  className="bg-white" /></div>
                   <div className="space-y-2"><Label className="text-slate-600 font-semibold" htmlFor="dokter4">Dokter IV (Opsional)</Label><Input id="dokter4" name="dokter4"  className="bg-white" /></div>
+                  <div className="space-y-2"><Label className="text-slate-600 font-semibold" htmlFor="dokter5">Dokter V (Opsional)</Label><Input id="dokter5" name="dokter5"  className="bg-white" /></div>
+                  <div className="space-y-2"><Label className="text-slate-600 font-semibold" htmlFor="dokter6">Dokter VI (Opsional)</Label><Input id="dokter6" name="dokter6"  className="bg-white" /></div>
                 </div>
               </div>
             </CardContent>

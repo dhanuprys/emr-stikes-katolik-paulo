@@ -180,6 +180,8 @@ export function EditPatientClientPage({ patient }: { patient: any }) {
                   <div className="space-y-2"><Label htmlFor="dokter2" className="text-slate-600 font-semibold">Dokter II (Opsional)</Label><Input id="dokter2" name="dokter2" defaultValue={patient.dokter2 || ""}  className="bg-white" /></div>
                   <div className="space-y-2"><Label htmlFor="dokter3" className="text-slate-600 font-semibold">Dokter III (Opsional)</Label><Input id="dokter3" name="dokter3" defaultValue={patient.dokter3 || ""}  className="bg-white" /></div>
                   <div className="space-y-2"><Label htmlFor="dokter4" className="text-slate-600 font-semibold">Dokter IV (Opsional)</Label><Input id="dokter4" name="dokter4" defaultValue={patient.dokter4 || ""}  className="bg-white" /></div>
+                  <div className="space-y-2"><Label htmlFor="dokter5" className="text-slate-600 font-semibold">Dokter V (Opsional)</Label><Input id="dokter5" name="dokter5" defaultValue={patient.dokter5 || ""}  className="bg-white" /></div>
+                  <div className="space-y-2"><Label htmlFor="dokter6" className="text-slate-600 font-semibold">Dokter VI (Opsional)</Label><Input id="dokter6" name="dokter6" defaultValue={patient.dokter6 || ""}  className="bg-white" /></div>
                 </div>
               </div>
             </CardContent>

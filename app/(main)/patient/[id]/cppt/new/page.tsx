@@ -161,25 +161,25 @@ export default function NewCpptPage({
           <CardContent className="pt-0 pb-6 px-6 space-y-6">
             <div className="space-y-2">
               <Label htmlFor="subjektif" className="text-base text-slate-600 font-semibold">S - Subjektif <span className="text-destructive">*</span></Label>
-              <Textarea id="subjektif" name="subjektif" required className="h-24 bg-white" value={subjektif} onChange={(e) => setSubjektif(e.target.value)} />
+              <Textarea id="subjektif" name="subjektif" required className="min-h-[160px] bg-white" value={subjektif} onChange={(e) => setSubjektif(e.target.value)} />
               {state?.errors?.subjektif && <p className="text-sm text-destructive">{state.errors.subjektif[0]}</p>}
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="objektif" className="text-base text-slate-600 font-semibold">O - Objektif <span className="text-destructive">*</span></Label>
-              <Textarea id="objektif" name="objektif" required className="h-24 bg-white" value={objektif} onChange={(e) => setObjektif(e.target.value)} />
+              <Textarea id="objektif" name="objektif" required className="min-h-[160px] bg-white" value={objektif} onChange={(e) => setObjektif(e.target.value)} />
               {state?.errors?.objektif && <p className="text-sm text-destructive">{state.errors.objektif[0]}</p>}
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="assessment" className="text-base text-slate-600 font-semibold">A - Assessment <span className="text-destructive">*</span></Label>
-              <Textarea id="assessment" name="assessment" required className="h-20 bg-white" value={assessment} onChange={(e) => setAssessment(e.target.value)} />
+              <Textarea id="assessment" name="assessment" required className="min-h-[160px] bg-white" value={assessment} onChange={(e) => setAssessment(e.target.value)} />
               {state?.errors?.assessment && <p className="text-sm text-destructive">{state.errors.assessment[0]}</p>}
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="planning" className="text-base text-slate-600 font-semibold">P - Planning <span className="text-destructive">*</span></Label>
-              <Textarea id="planning" name="planning" required className="h-24 bg-white" value={planning} onChange={(e) => setPlanning(e.target.value)} />
+              <Textarea id="planning" name="planning" required className="min-h-[160px] bg-white" value={planning} onChange={(e) => setPlanning(e.target.value)} />
               {state?.errors?.planning && <p className="text-sm text-destructive">{state.errors.planning[0]}</p>}
             </div>
           </CardContent>
