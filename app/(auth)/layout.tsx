@@ -16,7 +16,7 @@ export default function AuthLayout({
           backgroundPosition: 'center',
         }}
       >
-        <div className="absolute inset-0 bg-white/45" />
+        {/* <div className="absolute inset-0 bg-white/45" /> */}
       </div>
 
       <div className="relative z-10 w-full max-w-md">
