@@ -180,15 +180,15 @@ model Observation {
   user         User           @relation(fields: [userId], references: [id])
   
   tanggal      DateTime
-  nadi         String
-  tensi        String
-  rr           String
-  suhu         String
-  spo2         String
-  nrs          String
-  gcs          String
-  pupil        String
-  ews          String
+  nadi         String?
+  tensi        String?
+  rr           String?
+  suhu         String?
+  spo2         String?
+  nrs          String?
+  gcs          String?
+  pupil        String?
+  ews          String?
   
   cm           CairanMasuk[]
   ck           CairanKeluar[]
