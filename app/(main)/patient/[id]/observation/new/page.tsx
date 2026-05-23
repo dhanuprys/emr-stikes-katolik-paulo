@@ -63,15 +63,15 @@ export default function NewObservationPage({
             setValue("balansStart", format(new Date(res.balansStart), "yyyy-MM-dd'T'HH:mm:ssXXX"));
           }
 
-          setValue("nadi", res.nadi);
-          setValue("tensi", res.tensi);
-          setValue("rr", res.rr);
+          setValue("nadi", res.nadi || "");
+          setValue("tensi", res.tensi || "");
+          setValue("rr", res.rr || "");
           setValue("suhu", res.suhu || "");
-          setValue("spo2", res.spo2);
-          setValue("nrs", res.nrs);
-          setValue("gcs", res.gcs);
-          setValue("pupil", res.pupil);
-          setValue("ews", res.ews);
+          setValue("spo2", res.spo2 || "");
+          setValue("nrs", res.nrs || "");
+          setValue("gcs", res.gcs || "");
+          setValue("pupil", res.pupil || "");
+          setValue("ews", res.ews || "");
           setValue("cm", res.cm as any);
           setValue("ck", res.ck as any);
           setValue("balans", res.balans);
