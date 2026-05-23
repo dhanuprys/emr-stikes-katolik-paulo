@@ -48,7 +48,10 @@ export default async function DashboardPage({
   const [patients, total, controlCount] = await Promise.all([
     prisma.patient.findMany({
       where: whereClause,
-      orderBy: { createdAt: "desc" },
+      orderBy: [
+        { tanggalKeluar: "asc" },
+        { createdAt: "desc" }
+      ],
       skip,
       take: limit,
     }),
