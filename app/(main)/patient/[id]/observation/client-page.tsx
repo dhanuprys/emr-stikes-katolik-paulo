@@ -128,7 +128,12 @@ export function ObservationClientPage({
                           <TableHead>Waktu</TableHead>
                           <TableHead>Tensi</TableHead>
                           <TableHead>Nadi</TableHead>
+                          <TableHead>Suhu</TableHead>
                           <TableHead>RR</TableHead>
+                          <TableHead>SPO2</TableHead>
+                          <TableHead>NRS</TableHead>
+                          <TableHead>GCS</TableHead>
+                          <TableHead>EWS</TableHead>
                           <TableHead>Balans</TableHead>
                           <TableHead className="text-right">Aksi</TableHead>
                         </TableRow>
@@ -145,7 +150,12 @@ export function ObservationClientPage({
                               </TableCell>
                               <TableCell>{obs.tensi}</TableCell>
                               <TableCell>{obs.nadi}</TableCell>
+                              <TableCell>{obs.suhu}</TableCell>
                               <TableCell>{obs.rr}</TableCell>
+                              <TableCell>{obs.spo2}</TableCell>
+                              <TableCell>{obs.nrs}</TableCell>
+                              <TableCell>{obs.gcs}</TableCell>
+                              <TableCell>{obs.ews}</TableCell>
                               <TableCell>
                                 <Badge variant={obs.balans < 0 ? "destructive" : "default"} className={obs.balans >= 0 ? "bg-emerald-600 hover:bg-emerald-700 whitespace-nowrap" : "whitespace-nowrap"}>
                                   {obs.balans > 0 ? "+" : ""}{obs.balans}
@@ -162,23 +172,18 @@ export function ObservationClientPage({
                                 </div>
                               </TableCell>
                             </TableRow>
-                            {(obs.suhu || obs.spo2 || obs.nrs || obs.gcs || obs.pupil || obs.ews || obs.keistimewaan) && (
+                            {(obs.pupil || obs.keistimewaan) && (
                               <TableRow className="bg-slate-50/40 hover:bg-slate-50/40">
-                                <TableCell colSpan={6} className="pt-0 pb-4 pl-[3.25rem]">
+                                <TableCell colSpan={11} className="pt-0 pb-4 pl-13">
                                   <div className="bg-white border rounded-md p-3 shadow-sm relative space-y-3">
-                                    {(obs.suhu || obs.spo2 || obs.nrs || obs.gcs || obs.pupil || obs.ews) && (
+                                    {obs.pupil && (
                                       <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
-                                        {obs.suhu && <div><span className="text-muted-foreground text-xs uppercase font-semibold">Suhu:</span> {obs.suhu}</div>}
-                                        {obs.spo2 && <div><span className="text-muted-foreground text-xs uppercase font-semibold">SPO2:</span> {obs.spo2}</div>}
-                                        {obs.nrs && <div><span className="text-muted-foreground text-xs uppercase font-semibold">NRS:</span> {obs.nrs}</div>}
-                                        {obs.gcs && <div><span className="text-muted-foreground text-xs uppercase font-semibold">GCS:</span> {obs.gcs}</div>}
-                                        {obs.pupil && <div><span className="text-muted-foreground text-xs uppercase font-semibold">Pupil/RC:</span> {obs.pupil}</div>}
-                                        {obs.ews && <div><span className="text-muted-foreground text-xs uppercase font-semibold">EWS:</span> {obs.ews}</div>}
+                                        <div><span className="text-muted-foreground text-xs uppercase font-semibold">Pupil/RC:</span> {obs.pupil}</div>
                                       </div>
                                     )}
 
                                     {obs.keistimewaan && (
-                                      <div className="pt-2 border-t mt-2">
+                                      <div className={obs.pupil ? "pt-2 border-t mt-2" : ""}>
                                         <div className="text-[10px] font-bold text-primary uppercase tracking-wider mb-1">
                                           Keistimewaan
                                         </div>
