@@ -35,7 +35,7 @@ export default function NewObservationPage({
     resolver: zodResolver(observationSchema) as any,
     defaultValues: {
       tanggal: new Date().toISOString().slice(0, 16),
-      nadi: "", tensi: "", rr: "", spo2: "", nrs: "", gcs: "", pupil: "", ews: "",
+      nadi: "", tensi: "", rr: "", suhu: "", spo2: "", nrs: "", gcs: "", pupil: "", ews: "",
       cm: [], ck: [],
       balans: 0,
       balansStart: null,
@@ -70,6 +70,7 @@ export default function NewObservationPage({
           setValue("nadi", res.nadi);
           setValue("tensi", res.tensi);
           setValue("rr", res.rr);
+          setValue("suhu", res.suhu || "");
           setValue("spo2", res.spo2);
           setValue("nrs", res.nrs);
           setValue("gcs", res.gcs);
@@ -187,6 +188,7 @@ export default function NewObservationPage({
             <div className="space-y-2"><Label>Tensi</Label><Input {...register("tensi")} className="bg-white" />{errors.tensi && <p className="text-sm text-destructive">{errors.tensi.message}</p>}</div>
             <div className="space-y-2"><Label>Nadi</Label><Input {...register("nadi")} className="bg-white" />{errors.nadi && <p className="text-sm text-destructive">{errors.nadi.message}</p>}</div>
             <div className="space-y-2"><Label>RR</Label><Input {...register("rr")} className="bg-white" />{errors.rr && <p className="text-sm text-destructive">{errors.rr.message}</p>}</div>
+            <div className="space-y-2"><Label>Suhu</Label><Input {...register("suhu")} className="bg-white" />{errors.suhu && <p className="text-sm text-destructive">{errors.suhu.message}</p>}</div>
             <div className="space-y-2"><Label>SPO2</Label><Input {...register("spo2")} className="bg-white" />{errors.spo2 && <p className="text-sm text-destructive">{errors.spo2.message}</p>}</div>
             <div className="space-y-2"><Label>NRS</Label><Input {...register("nrs")} className="bg-white" />{errors.nrs && <p className="text-sm text-destructive">{errors.nrs.message}</p>}</div>
             <div className="space-y-2"><Label>GCS</Label><Input {...register("gcs")} className="bg-white" />{errors.gcs && <p className="text-sm text-destructive">{errors.gcs.message}</p>}</div>

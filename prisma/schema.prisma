@@ -183,6 +183,7 @@ model Observation {
   nadi         String
   tensi        String
   rr           String
+  suhu         String
   spo2         String
   nrs          String
   gcs          String

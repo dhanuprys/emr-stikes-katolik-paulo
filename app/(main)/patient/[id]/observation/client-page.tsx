@@ -129,7 +129,7 @@ export function ObservationClientPage({
                           <TableHead>Tensi</TableHead>
                           <TableHead>Nadi</TableHead>
                           <TableHead>RR</TableHead>
-                          <TableHead>Balans (ml)</TableHead>
+                          <TableHead>Balans</TableHead>
                           <TableHead className="text-right">Aksi</TableHead>
                         </TableRow>
                       </TableHeader>
@@ -138,7 +138,7 @@ export function ObservationClientPage({
                           <React.Fragment key={obs.id}>
                             <TableRow className={obs.keistimewaan ? "border-b-0" : ""}>
                               <TableCell className="font-medium">
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-2 whitespace-nowrap">
                                   <Clock className="h-3 w-3 text-muted-foreground" /> 
                                   {new Date(obs.tanggal).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit'})}
                                 </div>
@@ -147,7 +147,7 @@ export function ObservationClientPage({
                               <TableCell>{obs.nadi}</TableCell>
                               <TableCell>{obs.rr}</TableCell>
                               <TableCell>
-                                <Badge variant={obs.balans < 0 ? "destructive" : "default"} className={obs.balans >= 0 ? "bg-emerald-600 hover:bg-emerald-700" : ""}>
+                                <Badge variant={obs.balans < 0 ? "destructive" : "default"} className={obs.balans >= 0 ? "bg-emerald-600 hover:bg-emerald-700 whitespace-nowrap" : "whitespace-nowrap"}>
                                   {obs.balans > 0 ? "+" : ""}{obs.balans}
                                 </Badge>
                               </TableCell>
@@ -162,16 +162,31 @@ export function ObservationClientPage({
                                 </div>
                               </TableCell>
                             </TableRow>
-                            {obs.keistimewaan && (
+                            {(obs.suhu || obs.spo2 || obs.nrs || obs.gcs || obs.pupil || obs.ews || obs.keistimewaan) && (
                               <TableRow className="bg-slate-50/40 hover:bg-slate-50/40">
                                 <TableCell colSpan={6} className="pt-0 pb-4 pl-[3.25rem]">
-                                  <div className="bg-white border rounded-md p-3 shadow-sm relative">
-                                    <div className="absolute -top-2.5 left-4 bg-white px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
-                                      Keistimewaan
-                                    </div>
-                                    <div className="text-sm text-slate-700 whitespace-pre-wrap mt-1 leading-relaxed">
-                                      {obs.keistimewaan}
-                                    </div>
+                                  <div className="bg-white border rounded-md p-3 shadow-sm relative space-y-3">
+                                    {(obs.suhu || obs.spo2 || obs.nrs || obs.gcs || obs.pupil || obs.ews) && (
+                                      <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+                                        {obs.suhu && <div><span className="text-muted-foreground text-xs uppercase font-semibold">Suhu:</span> {obs.suhu}</div>}
+                                        {obs.spo2 && <div><span className="text-muted-foreground text-xs uppercase font-semibold">SPO2:</span> {obs.spo2}</div>}
+                                        {obs.nrs && <div><span className="text-muted-foreground text-xs uppercase font-semibold">NRS:</span> {obs.nrs}</div>}
+                                        {obs.gcs && <div><span className="text-muted-foreground text-xs uppercase font-semibold">GCS:</span> {obs.gcs}</div>}
+                                        {obs.pupil && <div><span className="text-muted-foreground text-xs uppercase font-semibold">Pupil/RC:</span> {obs.pupil}</div>}
+                                        {obs.ews && <div><span className="text-muted-foreground text-xs uppercase font-semibold">EWS:</span> {obs.ews}</div>}
+                                      </div>
+                                    )}
+
+                                    {obs.keistimewaan && (
+                                      <div className="pt-2 border-t mt-2">
+                                        <div className="text-[10px] font-bold text-primary uppercase tracking-wider mb-1">
+                                          Keistimewaan
+                                        </div>
+                                        <div className="text-sm text-slate-700 whitespace-pre-wrap leading-relaxed">
+                                          {obs.keistimewaan}
+                                        </div>
+                                      </div>
+                                    )}
                                   </div>
                                 </TableCell>
                               </TableRow>

@@ -19,6 +19,7 @@ export const observationSchema = z.object({
   nadi: z.string().optional().default(""),
   tensi: z.string().optional().default(""),
   rr: z.string().optional().default(""),
+  suhu: z.string().optional().default(""),
   spo2: z.string().optional().default(""),
   nrs: z.string().optional().default(""),
   gcs: z.string().optional().default(""),
