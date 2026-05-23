@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Loader2, Plus, Trash2, Calculator, Info } from "lucide-react";
 import { DatePicker } from "@/components/ui/date-picker";
+import { format } from "date-fns";
 
 export default function NewObservationPage({
   params,
@@ -55,16 +56,11 @@ export default function NewObservationPage({
       setIsLoading(true);
       getObservationByIdAction(editIdParam).then((res) => {
         if (res) {
-          // Format date strings properly for datetime-local
           if (res.tanggal) {
-            const d = new Date(res.tanggal);
-            d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
-            setValue("tanggal", d.toISOString().slice(0, 16));
+            setValue("tanggal", format(new Date(res.tanggal), "yyyy-MM-dd'T'HH:mm:ssXXX"));
           }
           if (res.balansStart) {
-            const d = new Date(res.balansStart);
-            d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
-            setValue("balansStart", d.toISOString().slice(0, 16));
+            setValue("balansStart", format(new Date(res.balansStart), "yyyy-MM-dd'T'HH:mm:ssXXX"));
           }
 
           setValue("nadi", res.nadi);
@@ -84,10 +80,8 @@ export default function NewObservationPage({
         setIsLoading(false);
       });
     } else {
-      // Set default local time for new entry
-      const now = new Date();
-      now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-      setValue("tanggal", now.toISOString().slice(0, 16));
+      // Set default local time for new entry with timezone offset
+      setValue("tanggal", format(new Date(), "yyyy-MM-dd'T'HH:mm:ssXXX"));
     }
   }, [editIdParam, setValue]);
 

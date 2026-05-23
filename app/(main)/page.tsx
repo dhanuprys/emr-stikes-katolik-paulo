@@ -84,8 +84,8 @@ export default async function DashboardPage({
       <div className="relative z-10 space-y-6 pb-8">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Daftar Pasien</h1>
-          <p className="text-muted-foreground">Kelola data rekam medis pasien</p>
+          <h1 className="text-3xl font-bold tracking-tight">SIGAP</h1>
+          <p className="text-gray-700 font-bold">Sistem Integrasi Data Pasien</p>
         </div>
         <Button asChild>
           <Link href="/patient/new">
