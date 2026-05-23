@@ -232,9 +232,9 @@ export const assessmentSections: SectionDef[] = [
     { key:"bhsOrtu", label:"Bahasa", type:"radio", options:["Indonesia","Inggris","Daerah"], allowCustom:true },
     { key:"bacaTulis", label:"Kemampuan baca dan tulis", type:"radio", options:["Baik","Kurang","Tidak bisa"] },
     { key:"penerjemah", label:"Penerjemah", type:"radio", options:["Tidak","Ya"], allowCustom:true },
-    { key:"caraBelajar", label:"Cara belajar yang disukai", type:"radio", options:["Diskusi","Demonstrasi","Audio Visual/Gambar","Membaca"] },
+    { key:"caraBelajar", label:"Cara belajar yang disukai", type:"checkbox", options:["Diskusi","Demonstrasi","Audio Visual/Gambar","Membaca"] },
     { key:"hambatanBelajar", label:"Hambatan belajar", type:"radio", options:["Tidak","Ya"], allowCustom:true },
-    { key:"infoDiperlukan", label:"Informasi yang diperlukan", type:"radio", options:["Nutrisi","Hygiene personal","Penggunaan alat medis","Manajemen nyeri","Proses penyakit","Terapi/obat","Rencana keperawatan","Lain-lain"], allowCustom:true },
+    { key:"infoDiperlukan", label:"Informasi yang diperlukan", type:"checkbox", options:["Nutrisi","Hygiene personal","Penggunaan alat medis","Manajemen nyeri","Proses penyakit","Terapi/obat","Rencana keperawatan","Lain-lain"], allowCustom:true },
   ]},
 ];
 
