@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/utils";
 import { PatientTabs } from "./patient-tabs";
+import { AvatarUpload } from "@/components/patient/avatar-upload";
 
 export default async function PatientLayout({
   children,
@@ -41,9 +42,7 @@ export default async function PatientLayout({
         <CardContent className="p-6">
           <div className="flex flex-col md:flex-row gap-6 items-start justify-between">
             <div className="flex gap-4 items-start w-full md:w-3/4">
-              <div className="h-16 w-16 bg-primary/20 text-primary rounded-full flex items-center justify-center shrink-0">
-                <User size={32} />
-              </div>
+              <AvatarUpload patientId={patient.id} initialPhotoUrl={patient.photo} />
               <div className="flex-1">
                 <h2 className="text-2xl font-bold text-slate-800">{patient.nama}</h2>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-1 text-sm text-muted-foreground">

@@ -62,6 +62,8 @@ model Patient {
   daruratTelepon     String
   daruratHubungan    String
 
+  photo              String?
+
   diagnosaKeluar     String?
   diagnosaUtama      String?
   diagnosaTambahan   String?
