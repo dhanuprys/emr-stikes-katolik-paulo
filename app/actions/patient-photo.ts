@@ -52,3 +52,24 @@ export async function uploadPatientPhotoAction(patientId: string, formData: Form
     return { success: false, message: "Gagal mengunggah foto." };
   }
 }
+
+export async function deletePatientPhotoAction(patientId: string) {
+  const session = await getSession();
+  if (!session) {
+    return { success: false, message: "Unauthorized" };
+  }
+
+  try {
+    await prisma.patient.update({
+      where: { id: patientId },
+      data: { photo: null },
+    });
+
+    revalidatePath(`/patient/${patientId}`);
+    return { success: true };
+  } catch (error: any) {
+    console.error("Delete photo error:", error);
+    return { success: false, message: "Gagal menghapus foto." };
+  }
+}
+

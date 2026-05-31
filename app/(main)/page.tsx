@@ -8,6 +8,7 @@ import { Plus, Search, User, FileText, Edit, AlertCircle, X } from "lucide-react
 import { formatDate } from "@/lib/utils";
 
 import bgImage from "@/components/assets/rkz.jpg";
+import { getDefaultAvatar } from "@/lib/avatar";
 
 export default async function DashboardPage({
   searchParams,
@@ -151,12 +152,24 @@ export default async function DashboardPage({
           {patients.map((patient) => (
             <Card key={patient.id} className="hover:border-primary/50 transition-colors h-full flex flex-col">
               <CardHeader className="p-4 pb-2">
-                <div className="flex justify-between items-start">
-                  <CardTitle className="text-lg line-clamp-1" title={patient.nama}>
-                    {patient.nama}
-                  </CardTitle>
+                <div className="flex gap-3 items-center">
+                  <div className="h-10 w-10 shrink-0 rounded-full overflow-hidden border border-primary/20 shadow-sm">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img 
+                      src={patient.photo || getDefaultAvatar(patient.gender, patient.umur)} 
+                      alt={patient.nama} 
+                      className="h-full w-full object-cover" 
+                    />
+                  </div>
+                  <div className="flex flex-col flex-1 overflow-hidden">
+                    <div className="flex justify-between items-start">
+                      <CardTitle className="text-lg line-clamp-1" title={patient.nama}>
+                        {patient.nama}
+                      </CardTitle>
+                    </div>
+                    <CardDescription className="font-mono text-xs mt-0.5">RM: {patient.noRm}</CardDescription>
+                  </div>
                 </div>
-                <CardDescription className="font-mono text-xs">RM: {patient.noRm}</CardDescription>
               </CardHeader>
               <CardContent className="p-4 pt-2 flex-1">
                 <div className="text-sm space-y-1 mb-3">
