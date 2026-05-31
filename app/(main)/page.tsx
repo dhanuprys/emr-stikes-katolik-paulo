@@ -46,7 +46,7 @@ export default async function DashboardPage({
     };
   }
 
-  const [patients, total, controlCount] = await Promise.all([
+  const [patients, total, controlCount, dirawatCount, krsCount] = await Promise.all([
     prisma.patient.findMany({
       where: whereClause,
       orderBy: [
@@ -65,6 +65,8 @@ export default async function DashboardPage({
         }
       }
     }),
+    prisma.patient.count({ where: { ...whereClause, tanggalKeluar: null } }),
+    prisma.patient.count({ where: { ...whereClause, tanggalKeluar: { not: null } } }),
   ]);
 
   const totalPages = Math.ceil(total / limit);
@@ -84,30 +86,51 @@ export default async function DashboardPage({
       
       <div className="relative z-10 space-y-6 pb-8">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">SIGAP</h1>
-          <p className="text-gray-700 font-bold">Sistem Integrasi Data Pasien</p>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">SIGAP</h1>
+            <p className="text-gray-700 font-bold">Sistem Integrasi Data Pasien</p>
+          </div>
+          <Button asChild>
+            <Link href="/patient/new">
+              <Plus className="mr-2 h-4 w-4" /> Tambah Pasien Baru
+            </Link>
+          </Button>
         </div>
-        <Button asChild>
-          <Link href="/patient/new">
-            <Plus className="mr-2 h-4 w-4" /> Tambah Pasien Baru
-          </Link>
-        </Button>
-      </div>
 
-      <div className="flex items-center space-x-2">
-        <form className="relative flex-1 max-w-md" action="/">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground z-10" />
-          <Input
-            type="search"
-            name="q"
-            placeholder="Cari nama atau No. RM..."
-            className="pl-9"
-            defaultValue={searchQuery}
-          />
-          {filter && <input type="hidden" name="filter" value={filter} />}
-        </form>
-      </div>
+        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+          <form className="relative flex-1 max-w-md" action="/">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground z-10" />
+            <Input
+              type="search"
+              name="q"
+              placeholder="Cari nama atau No. RM..."
+              className="pl-9 bg-white/90"
+              defaultValue={searchQuery}
+            />
+            {filter && <input type="hidden" name="filter" value={filter} />}
+          </form>
+
+          {/* Compact Dashboard Metrics */}
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-sm bg-white/70 backdrop-blur border border-primary/10 px-4 py-2 rounded-lg w-fit shadow-sm">
+            <div className="flex items-center gap-2">
+              <User className="h-4 w-4 text-primary/70" />
+              <span className="text-muted-foreground">Total:</span>
+              <span className="font-bold text-slate-800">{total}</span>
+            </div>
+            <div className="w-px h-4 bg-border hidden sm:block"></div>
+            <div className="flex items-center gap-2">
+              <div className="h-2 w-2 bg-emerald-500 rounded-full shadow-[0_0_5px_rgba(16,185,129,0.5)] animate-pulse" />
+              <span className="text-muted-foreground">Dirawat:</span>
+              <span className="font-bold text-emerald-600">{dirawatCount}</span>
+            </div>
+            <div className="w-px h-4 bg-border hidden sm:block"></div>
+            <div className="flex items-center gap-2">
+              <div className="h-2 w-2 bg-red-500 rounded-full" />
+              <span className="text-muted-foreground">KRS:</span>
+              <span className="font-bold text-red-600">{krsCount}</span>
+            </div>
+          </div>
+        </div>
 
       {controlCount > 0 && filter !== "kontrol" && (
         <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-md shadow-sm flex items-center justify-between">
