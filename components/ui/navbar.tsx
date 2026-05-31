@@ -21,18 +21,21 @@ export function Navbar({ userName }: { userName: string }) {
           </Link>
           <div className="hidden md:flex gap-6 ml-6 text-sm">
             <Link
+              id="tour-nav-dashboard"
               href="/"
               className={`transition-colors hover:text-foreground/80 ${pathname === "/" ? "text-foreground font-medium" : "text-foreground/60"}`}
             >
               Dashboard
             </Link>
             <Link
+              id="tour-nav-apikeys"
               href="/settings/api-keys"
               className={`transition-colors hover:text-foreground/80 flex items-center gap-1 ${pathname.startsWith("/settings") ? "text-foreground font-medium" : "text-foreground/60"}`}
             >
               <Key className="h-3.5 w-3.5" /> API Keys
             </Link>
             <Link
+              id="tour-nav-auditlog"
               href="/audit-logs"
               className={`transition-colors hover:text-foreground/80 flex items-center gap-1 ${pathname.startsWith("/audit-logs") ? "text-foreground font-medium" : "text-foreground/60"}`}
             >

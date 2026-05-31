@@ -21,7 +21,7 @@ export default async function PatientIdentityPage({
     <div className="space-y-6">
       <div className="flex justify-end gap-2">
         <DeletePatientButton id={patient.id} name={patient.nama} />
-        <Button variant="outline" asChild>
+        <Button id="tour-btn-edit-identitas" variant="outline" asChild>
           <Link href={`/patient/${patient.id}/edit`}>
             <Edit className="h-4 w-4 mr-2" /> Edit Identitas
           </Link>

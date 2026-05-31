@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/utils";
 import { PatientTabs } from "./patient-tabs";
 import { AvatarUpload } from "@/components/patient/avatar-upload";
+import { PatientDetailTour } from "@/components/dashboard/patient-detail-tour";
 import { getDefaultAvatar } from "@/lib/avatar";
 
 export default async function PatientLayout({
@@ -39,15 +40,17 @@ export default async function PatientLayout({
         </div>
       </div>
 
-      <Card className="bg-primary/5 border-primary/20">
+      <Card id="tour-patient-header" className="bg-primary/5 border-primary/20">
         <CardContent className="p-6">
           <div className="flex flex-col md:flex-row gap-6 items-start justify-between">
             <div className="flex gap-4 items-start w-full md:w-3/4">
-              <AvatarUpload 
-                patientId={patient.id} 
-                customPhotoUrl={patient.photo} 
-                defaultPhotoUrl={getDefaultAvatar(patient.gender, patient.umur)} 
-              />
+              <div id="tour-patient-avatar">
+                <AvatarUpload 
+                  patientId={patient.id} 
+                  customPhotoUrl={patient.photo} 
+                  defaultPhotoUrl={getDefaultAvatar(patient.gender, patient.umur)} 
+                />
+              </div>
               <div className="flex-1">
                 <h2 className="text-2xl font-bold text-slate-800">{patient.nama}</h2>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-1 text-sm text-muted-foreground">
@@ -78,7 +81,7 @@ export default async function PatientLayout({
               </div>
             </div>
             
-            <div className="flex flex-col md:items-end gap-2 text-sm text-muted-foreground bg-white/40 p-3 rounded-lg border border-primary/10 md:bg-transparent md:border-none md:p-0 w-full md:w-auto">
+            <div id="tour-patient-status" className="flex flex-col md:items-end gap-2 text-sm text-muted-foreground bg-white/40 p-3 rounded-lg border border-primary/10 md:bg-transparent md:border-none md:p-0 w-full md:w-auto">
               <div className="flex items-center gap-2">
                 <span>Status:</span>
                 {patient.tanggalKeluar ? (
@@ -94,6 +97,7 @@ export default async function PatientLayout({
         </CardContent>
       </Card>
 
+      <PatientDetailTour />
       <PatientTabs patientId={patient.id} />
       
       <div className="mt-6">

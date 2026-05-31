@@ -9,6 +9,7 @@ import { formatDate } from "@/lib/utils";
 
 import bgImage from "@/components/assets/rkz.jpg";
 import { getDefaultAvatar } from "@/lib/avatar";
+import { DashboardTour } from "@/components/dashboard/tour";
 
 export default async function DashboardPage({
   searchParams,
@@ -90,15 +91,18 @@ export default async function DashboardPage({
             <h1 className="text-3xl font-bold tracking-tight">SIGAP</h1>
             <p className="text-gray-700 font-bold">Sistem Integrasi Data Pasien</p>
           </div>
-          <Button asChild>
-            <Link href="/patient/new">
-              <Plus className="mr-2 h-4 w-4" /> Tambah Pasien Baru
-            </Link>
-          </Button>
+          <div className="flex items-center gap-2">
+            <DashboardTour hasPatients={patients.length > 0} firstPatientId={patients[0]?.id} />
+            <Button id="tour-btn-tambah-pasien" asChild>
+              <Link href="/patient/new">
+                <Plus className="mr-2 h-4 w-4" /> Tambah Pasien Baru
+              </Link>
+            </Button>
+          </div>
         </div>
 
         <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
-          <form className="relative flex-1 max-w-md" action="/">
+          <form id="tour-search" className="relative flex-1 max-w-md" action="/">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground z-10" />
             <Input
               type="search"
@@ -111,7 +115,7 @@ export default async function DashboardPage({
           </form>
 
           {/* Compact Dashboard Metrics */}
-          <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-sm bg-white/70 backdrop-blur border border-primary/10 px-4 py-2 rounded-lg w-fit shadow-sm">
+          <div id="tour-stats" className="flex flex-wrap items-center gap-3 sm:gap-4 text-sm bg-white/70 backdrop-blur border border-primary/10 px-4 py-2 rounded-lg w-fit shadow-sm">
             <div className="flex items-center gap-2">
               <User className="h-4 w-4 text-primary/70" />
               <span className="text-muted-foreground">Total:</span>
@@ -173,7 +177,7 @@ export default async function DashboardPage({
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
           {patients.map((patient) => (
-            <Card key={patient.id} className="hover:border-primary/50 transition-colors h-full flex flex-col">
+            <Card key={patient.id} {...(patients.indexOf(patient) === 0 ? { id: "tour-patient-card" } : {})} className="hover:border-primary/50 transition-colors h-full flex flex-col">
               <CardHeader className="p-4 pb-2">
                 <div className="flex gap-3 items-center">
                   <div className="h-10 w-10 shrink-0 rounded-full overflow-hidden border border-primary/20 shadow-sm">
@@ -216,12 +220,12 @@ export default async function DashboardPage({
                 </div>
               </CardContent>
               <CardFooter className="p-4 pt-0 flex gap-2">
-                <Button variant="default" className="flex-1" size="sm" asChild>
+                <Button {...(patients.indexOf(patient) === 0 ? { id: "tour-btn-buka" } : {})} variant="default" className="flex-1" size="sm" asChild>
                   <Link href={`/patient/${patient.id}`}>
                     <FileText className="h-4 w-4 mr-2" /> Buka
                   </Link>
                 </Button>
-                <Button variant="outline" size="sm" asChild>
+                <Button {...(patients.indexOf(patient) === 0 ? { id: "tour-btn-edit" } : {})} variant="outline" size="sm" asChild>
                   <Link href={`/patient/${patient.id}/edit`} title="Edit Pasien">
                     <Edit className="h-4 w-4" />
                   </Link>

@@ -14,36 +14,42 @@ export function PatientTabs({ patientId }: { patientId: string }) {
       href: `/patient/${patientId}`,
       icon: User,
       exact: true,
+      tourId: "tour-tab-identitas",
     },
     {
       name: "Asesmen Awal",
       href: `/patient/${patientId}/assessment`,
       icon: Stethoscope,
       exact: false,
+      tourId: "tour-tab-asesmen",
     },
     {
       name: "Timbang Terima",
       href: `/patient/${patientId}/cppt`,
       icon: FileText,
       exact: false,
+      tourId: "tour-tab-cppt",
     },
     {
       name: "Observasi & Tindakan",
       href: `/patient/${patientId}/observation`,
       icon: Activity,
       exact: false,
+      tourId: "tour-tab-observasi",
     },
     {
       name: "Hasil Lab",
       href: `/patient/${patientId}/lab`,
       icon: FlaskConical,
       exact: false,
+      tourId: "tour-tab-lab",
     },
     {
       name: "Resume",
       href: `/patient/${patientId}/resume`,
       icon: BookOpenCheckIcon,
       exact: false,
+      tourId: "tour-tab-resume",
     },
     {
       name: "Ringkasan AI",
@@ -51,6 +57,7 @@ export function PatientTabs({ patientId }: { patientId: string }) {
       special: true,
       icon: Sparkles,
       exact: false,
+      tourId: "tour-tab-ai",
     }
   ];
 
@@ -63,6 +70,7 @@ export function PatientTabs({ patientId }: { patientId: string }) {
 
         return (
           <Link
+            id={tab.tourId}
             key={tab.name}
             href={tab.href}
             className={cn(
