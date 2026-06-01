@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useState, useTransition, useRef } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { saveResumeAction, getResumeAction } from "@/app/actions/resume";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Loader2, Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Loader2, Check, Plus, Trash2, CalendarClock } from "lucide-react";
 import { resumeSections, buildResumeDefaults } from "@/lib/resume-fields";
 import { FieldRenderer } from "@/components/assessment/field-renderer";
 
@@ -25,6 +28,11 @@ export default function ResumePage({
     },
   });
 
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "jadwalKontrol",
+  });
+
   useEffect(() => { params.then(p => setPatientId(p.id)); }, [params]);
 
   // Load existing data
@@ -33,7 +41,19 @@ export default function ResumePage({
 
     getResumeAction(patientId).then((res) => {
       if (res && res.data) {
-        reset(res.data as any);
+        const loadedData = res.data as any;
+        // Ensure jadwalKontrol is always an array
+        if (!Array.isArray(loadedData.jadwalKontrol)) {
+          // Migrate old single tanggalKontrol if it exists
+          if (loadedData.tanggalKontrol) {
+            loadedData.jadwalKontrol = [
+              { tanggal: loadedData.tanggalKontrol, dokter: "", alamat: "" }
+            ];
+          } else {
+            loadedData.jadwalKontrol = [];
+          }
+        }
+        reset(loadedData);
       }
       setIsInitialLoad(false);
       hasLoadedRef.current = true;
@@ -106,6 +126,87 @@ export default function ResumePage({
             </CardContent>
           </Card>
         ))}
+
+        {/* Jadwal Kontrol Section */}
+        <Card className="shadow-sm border-t-4 border-t-amber-400">
+          <CardHeader className="pb-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle className="text-xl text-slate-800 flex items-center gap-2">
+                  <CalendarClock className="h-5 w-5 text-amber-500" />
+                  Jadwal Kontrol
+                </CardTitle>
+                <CardDescription className="mt-1">Jadwal kontrol pasien setelah KRS. Klik &quot;Tambah&quot; untuk menambahkan jadwal baru.</CardDescription>
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => append({ tanggal: "", dokter: "", alamat: "" })}
+                className="gap-1.5"
+              >
+                <Plus className="h-4 w-4" /> Tambah
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent className="pt-0 pb-6 px-6">
+            {fields.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground text-sm border border-dashed rounded-lg">
+                Belum ada jadwal kontrol. Klik &quot;Tambah&quot; untuk menambahkan.
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {fields.map((field, index) => (
+                  <div key={field.id} className="relative p-4 border rounded-lg bg-slate-50/50 hover:bg-slate-50 transition-colors">
+                    <div className="flex items-start justify-between gap-4 mb-3">
+                      <span className="text-xs font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">
+                        Kontrol #{index + 1}
+                      </span>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => remove(index)}
+                        className="h-7 w-7 p-0 text-rose-400 hover:text-rose-600 hover:bg-rose-50"
+                        title="Hapus jadwal"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </Button>
+                    </div>
+                    <div className="grid sm:grid-cols-3 gap-4">
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-medium text-muted-foreground">Tanggal & Jam</Label>
+                        <Input
+                          type="datetime-local"
+                          {...register(`jadwalKontrol.${index}.tanggal`)}
+                          className="text-sm"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-medium text-muted-foreground">Dokter</Label>
+                        <Input
+                          type="text"
+                          placeholder="Nama dokter"
+                          {...register(`jadwalKontrol.${index}.dokter`)}
+                          className="text-sm"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-medium text-muted-foreground">Alamat / Tempat Kontrol</Label>
+                        <Input
+                          type="text"
+                          placeholder="Alamat atau tempat kontrol"
+                          {...register(`jadwalKontrol.${index}.alamat`)}
+                          className="text-sm"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </form>
     </div>
   );

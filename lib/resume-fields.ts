@@ -23,9 +23,16 @@ export const resumeSections: SectionDef[] = [
     { key:"resumeKeadaanKrs", label:"Keadaan/hasil pengobatan waktu KRS", type:"textarea" },
     { key:"resumePrognosis", label:"Prognosis", type:"textarea" },
     { key:"resumeInstruksi", label:"Instruksi/Tindak Lanjut", type:"textarea" },
-    { key:"tanggalKontrol", label:"Tanggal Kontrol", type:"datetime", optional:true },
+    { key:"resumeKeteranganLain", label:"Keterangan lain", type:"textarea", optional:true },
+    // NOTE: tanggalKontrol is now handled as a separate dynamic array section in the page
   ]},
 ];
+
+export type JadwalKontrolEntry = {
+  tanggal: string;
+  dokter: string;
+  alamat: string;
+};
 
 // Build default values from resume sections
 export function buildResumeDefaults(): Record<string, any> {
@@ -33,5 +40,7 @@ export function buildResumeDefaults(): Record<string, any> {
   for (const s of resumeSections) for (const f of s.fields) {
     d[f.key] = "";
   }
+  // Initialize jadwalKontrol as empty array
+  d.jadwalKontrol = [];
   return d;
 }

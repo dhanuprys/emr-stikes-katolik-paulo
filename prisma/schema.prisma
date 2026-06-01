@@ -73,7 +73,8 @@ model Patient {
   operasiTindakan2   String?
   hasilPerawatan     String?
   caraKeluar         String?
-  tanggalKontrol     DateTime? // Field untuk indexing jadwal kontrol
+  tanggalKontrolTerdekat DateTime? // Computed: nearest future kontrol date for dashboard queries
+  jadwalKontrol          JadwalKontrol[] // Multiple control schedules
 
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
@@ -165,6 +166,12 @@ type CairanMasuk {
   jenis      String
   keterangan String?
   jumlah     Int
+}
+
+type JadwalKontrol {
+  tanggal String  // ISO datetime string
+  dokter  String
+  alamat  String
 }
 
 type CairanKeluar {

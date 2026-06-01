@@ -40,7 +40,7 @@ export default async function DashboardPage({
   if (filter === "kontrol") {
     whereClause = {
       ...whereClause,
-      tanggalKontrol: {
+      tanggalKontrolTerdekat: {
         gte: today,
         lte: controlEnd,
       }
@@ -60,7 +60,7 @@ export default async function DashboardPage({
     prisma.patient.count({ where: whereClause }),
     prisma.patient.count({
       where: {
-        tanggalKontrol: {
+        tanggalKontrolTerdekat: {
           gte: today,
           lte: controlEnd,
         }
@@ -208,7 +208,7 @@ export default async function DashboardPage({
                 <div className="text-xs text-muted-foreground flex flex-wrap justify-between items-center gap-2 bg-muted/30 p-2 rounded-md">
                   <span>Masuk: {formatDate(patient.tanggalMasuk)}</span>
                   <div className="flex flex-wrap items-center gap-1.5">
-                    {patient.tanggalKontrol && new Date(patient.tanggalKontrol) >= today && new Date(patient.tanggalKontrol) <= controlEnd && (
+                    {patient.tanggalKontrolTerdekat && new Date(patient.tanggalKontrolTerdekat) >= today && new Date(patient.tanggalKontrolTerdekat) <= controlEnd && (
                       <Badge variant="outline" className="bg-amber-100 text-amber-800 border-amber-300">Jadwal Kontrol</Badge>
                     )}
                     {patient.tanggalKeluar ? (
