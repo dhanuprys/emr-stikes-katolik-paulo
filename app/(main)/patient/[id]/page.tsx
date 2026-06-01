@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Edit } from "lucide-react";
 import { DeletePatientButton } from "@/components/patient/delete-button";
+import { DuplicatePatientButton } from "@/components/patient/duplicate-button";
 
 export default async function PatientIdentityPage({
   params,
@@ -20,6 +21,7 @@ export default async function PatientIdentityPage({
   return (
     <div className="space-y-6">
       <div className="flex justify-end gap-2">
+        <DuplicatePatientButton id={patient.id} name={patient.nama} />
         <DeletePatientButton id={patient.id} name={patient.nama} />
         <Button id="tour-btn-edit-identitas" variant="outline" asChild>
           <Link href={`/patient/${patient.id}/edit`}>

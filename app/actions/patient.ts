@@ -133,3 +133,126 @@ export async function deletePatientAction(id: string) {
     return { error: error.message || "Gagal menghapus pasien" };
   }
 }
+
+export async function duplicatePatientAction(id: string) {
+  try {
+    const patient = await prisma.patient.findUnique({
+      where: { id },
+      include: {
+        assessments: true,
+        resumes: true,
+        cppts: true,
+        labResults: true,
+        observations: true,
+      }
+    });
+
+    if (!patient) {
+      return { error: "Pasien tidak ditemukan" };
+    }
+
+    const duplicatedPatient = await prisma.$transaction(async (tx) => {
+      const { 
+        id: _, 
+        createdAt, 
+        updatedAt, 
+        assessments, 
+        resumes, 
+        cppts, 
+        labResults, 
+        observations, 
+        ...patientData 
+      } = patient;
+      
+      // Generate unique random suffix for noRm to avoid uniqueness conflict
+      const suffix = Math.floor(1000 + Math.random() * 9000).toString();
+
+      const newPatient = await tx.patient.create({
+        data: {
+          ...patientData,
+          nama: `${patientData.nama} (DUPLICATE)`,
+          noRm: `${patientData.noRm}-COPY-${suffix}`,
+        },
+      });
+
+      const newPatientId = newPatient.id;
+
+      if (assessments && assessments.length > 0) {
+        await tx.initialAssessment.createMany({
+          data: assessments.map((a) => ({
+            patientId: newPatientId,
+            data: a.data as any,
+          })),
+        });
+      }
+
+      if (resumes && resumes.length > 0) {
+        await tx.resume.createMany({
+          data: resumes.map((r) => ({
+            patientId: newPatientId,
+            data: r.data as any,
+          })),
+        });
+      }
+
+      if (cppts && cppts.length > 0) {
+        await tx.cppt.createMany({
+          data: cppts.map((c) => ({
+            patientId: newPatientId,
+            tanggal: c.tanggal,
+            waktu: c.waktu,
+            subjektif: c.subjektif,
+            objektif: c.objektif,
+            assessment: c.assessment,
+            planning: c.planning,
+          })),
+        });
+      }
+
+      if (labResults && labResults.length > 0) {
+        await tx.labResult.createMany({
+          data: labResults.map((l) => ({
+            patientId: newPatientId,
+            tanggal: l.tanggal,
+            files: l.files,
+          })),
+        });
+      }
+
+      if (observations && observations.length > 0) {
+        await tx.observation.createMany({
+          data: observations.map((o) => ({
+            patientId: newPatientId,
+            userId: o.userId,
+            tanggal: o.tanggal,
+            nadi: o.nadi,
+            tensi: o.tensi,
+            rr: o.rr,
+            suhu: o.suhu,
+            spo2: o.spo2,
+            nrs: o.nrs,
+            gcs: o.gcs,
+            pupil: o.pupil,
+            ews: o.ews,
+            cm: o.cm,
+            ck: o.ck,
+            balans: o.balans,
+            balansStart: o.balansStart,
+            keistimewaan: o.keistimewaan,
+          })),
+        });
+      }
+
+      return newPatient;
+    });
+
+    await logAudit("CREATE", "Patient", duplicatedPatient.id, duplicatedPatient);
+    
+    revalidatePath("/");
+    return { success: true, newId: duplicatedPatient.id };
+  } catch (error: any) {
+    return {
+      error: error.message || "Gagal menduplikasi pasien beserta rekam medisnya",
+    };
+  }
+}

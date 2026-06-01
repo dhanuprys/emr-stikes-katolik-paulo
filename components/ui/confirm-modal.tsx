@@ -14,6 +14,7 @@ interface ConfirmModalProps {
   isDestructive?: boolean;
   isLoading?: boolean;
   requireInput?: string;
+  confirmText?: string;
 }
 
 export function ConfirmModal({
@@ -25,6 +26,7 @@ export function ConfirmModal({
   isDestructive = true,
   isLoading = false,
   requireInput,
+  confirmText,
 }: ConfirmModalProps) {
   const [inputValue, setInputValue] = useState("");
 
@@ -86,7 +88,7 @@ export function ConfirmModal({
             ) : (
               <>
                 {isDestructive && <Trash2 className="h-4 w-4 mr-2" />}
-                Hapus
+                {confirmText || (isDestructive ? "Hapus" : "Konfirmasi")}
               </>
             )}
           </Button>

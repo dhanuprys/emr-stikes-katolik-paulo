@@ -71,6 +71,26 @@ export function PatientDetailTour() {
             },
           },
           {
+            element: "#tour-btn-duplicate",
+            popover: {
+              title: "Duplikasi Pasien",
+              description:
+                "Tombol ini memungkinkan Anda untuk menduplikasi pasien beserta seluruh riwayat medisnya secara instan.",
+              side: "bottom" as const,
+              align: "end" as const,
+            },
+          },
+          {
+            element: "#tour-btn-delete",
+            popover: {
+              title: "Hapus Pasien",
+              description:
+                "Gunakan tombol ini untuk menghapus data pasien dan seluruh rekam medisnya dari sistem.",
+              side: "bottom" as const,
+              align: "end" as const,
+            },
+          },
+          {
             element: "#tour-btn-edit-identitas",
             popover: {
               title: "Edit Identitas",

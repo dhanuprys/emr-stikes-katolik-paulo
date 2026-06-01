@@ -25,7 +25,7 @@ export function DeletePatientButton({ id, name }: { id: string, name: string }) 
 
   return (
     <>
-      <Button variant="outline" size="sm" onClick={() => setIsOpen(true)} title="Hapus Pasien" className="text-rose-500 hover:text-rose-600 hover:bg-rose-50">
+      <Button id="tour-btn-delete" variant="outline" size="sm" onClick={() => setIsOpen(true)} title="Hapus Pasien" className="text-rose-500 hover:text-rose-600 hover:bg-rose-50">
         <Trash2 className="h-4 w-4" />
       </Button>
 
